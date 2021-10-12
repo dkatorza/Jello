@@ -1,5 +1,3 @@
-"# Jello" 
-
 Jello is a Trello clone built for educational purposes using React and Redux.
 For those who wonder what Trello is, you can find more about on www.trello.com.
 Basically, it's a team tasks management platform where you and your team can collaborate, manage projects and increase productivity.
