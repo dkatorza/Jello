@@ -1,0 +1,53 @@
+
+.MuiDialog-container .sidebar-menu-dialog{
+
+    .MuiPaper-root{
+        background-color: #f4f5f7;
+        // position: absolute;
+        // top: 62px;
+        // right: 0;
+        box-shadow: none; 
+    }
+     .MuiButtonBase-root{   
+            background-color: hsla(218, 53%, 47%, 0.039);
+            border: none;
+            border-radius: 3px;
+            box-shadow: none;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            height: 32px;
+            margin-top: 8px;
+            width: 160px;
+            overflow: hidden;
+            padding: 6px 12px;
+            position: relative;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            transition-duration: 85ms;
+            transition-property: background-color,border-color,box-shadow;
+            transition-timing-function: ease;
+            -webkit-user-select: none;
+            user-select: none;
+            white-space: nowrap;
+            
+            font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+            
+            &:hover{
+                background-color: hsla(218, 53%, 47%, 0.085);
+               
+            }
+    
+    }
+   
+    .rdtPicker{
+        position: fixed;
+        top: 59%;
+    }
+      
+}
+ 

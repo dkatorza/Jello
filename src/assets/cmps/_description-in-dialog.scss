@@ -1,0 +1,93 @@
+// // .window-module {
+// //     clear: both;
+// //     margin-bottom: 24px;
+// //     position: relative;
+// // .window-module-title {
+// //         margin: 0 0 4px 40px;
+// //         padding: 8px 0;
+// //         position: relative;
+// //         .window-module-title-icon {
+// //             left: -40px;
+// //             position: absolute;
+               
+// //         }
+// //     }
+// //     .window-module-title-no-divider {
+// //         border-bottom: none;
+// //     }
+// //     .window-module-title.description-title {
+// //         align-items: center;
+// //         display: flex;
+// //         min-height: 32px;
+// //         .icon-lg{
+// //             -webkit-font-smoothing: antialiased;
+// //             -moz-osx-font-smoothing: grayscale;
+// //             display: inline-block;
+// //             font-family: trellicons;
+// //             font-style: normal;
+// //             font-weight: 400;
+// //             text-align: center;
+// //             text-decoration: none;
+// //             vertical-align: bottom;
+// //             font-size: 24px;
+// //             height: 32px;
+// //     line-height: 32px;
+// //     width: 32px;
+// //     color: #42526e;
+// //         }
+// //     }
+// // }
+
+// .window-title{
+//     margin: 4px 0 0;
+//     padding: 8px 0 0;
+    
+// .window-title h2 {
+//     margin-right: 4px;
+//     font-size: 20px;
+//     line-height: 24px;
+//     font-weight: 600;
+//     margin: 0 0 8px;
+// }
+// .card-detail-title-assist {
+//     display: none;
+// }
+// textarea{
+//     -webkit-appearance: none;
+//     border: none;
+//     box-sizing: border-box;
+//     display: block;
+//     outline: none;
+//     transition-duration: 85ms;
+//     transition-property: background-color,border-color,box-shadow;
+//     transition-timing-function: ease;
+//     width: 100%;
+//     font: inherit;
+
+//     .mod-card-back-title {
+//         background: #0000;
+//         border-radius: 3px;
+//         box-shadow: none;
+//         font-size: 20px;
+//         font-weight: 600;
+//         line-height: 24px;
+//         margin: -4px -8px;
+//         min-height: 24px;
+//         padding: 4px 8px;
+//         resize: none;
+//     }
+// }
+
+// }
+.window-module{
+
+    position: relative;
+    margin-top: 80px;
+}
+.description-form-control{
+    max-width: 480px;
+}
+[aria-describedBy = 'rbd-hidden-text-1-hidden-text-1'] {
+// background-color: aqua;
+// transform: rotateX(2deg);
+}

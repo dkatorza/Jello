@@ -1,0 +1,70 @@
+
+.quick-task-editor-title-container{
+    display: block;
+}
+
+.quick-task-editor-title-wrapper{
+    background-color:transparent;
+    position: absolute;
+}
+
+.quick-task-cover-preview{
+    right: 227px;
+    max-height: 32px;
+    min-height: 32px;
+    padding: 0px;
+    margin: 0;
+    border-width: 2px;
+    border-radius: 3px 3px 0 0;
+    background-size: cover;
+    user-select: none;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.quick-task-cover-img-preview{
+    right: 227px;
+    position: relative;
+    user-select: none;
+    
+}
+
+
+.quick-task-label-preview{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: flex-start;
+    overflow: auto;
+    position: relative;
+    margin: 0px;
+    padding: 6px 8px 2px;
+    right: 227px;
+    background-color: white;
+}
+
+.quick-task-editor-title-input {
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 112px;
+    height: 100%;
+    white-space: nowrap;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    resize: none;
+    position: relative;
+    
+    right: 227px;
+}
+
+.quick-task-editor-title-save-btn{
+    position: static;
+    margin-top: 15px;
+    margin-left: -225px;
+    z-index: 1500;
+}
+textarea.MuiInputBase-input.MuiInputBase-inputMultiline.css-rhrbtd-MuiInputBase-input{
+    height: 100px;
+}

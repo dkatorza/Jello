@@ -1,0 +1,33 @@
+.board-container{
+    // margin-block-start: 5vh;
+    height: calc(100vh); 
+    
+}
+.group-tasks-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 94vh;
+    margin: 0 4px;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+
+    &::-webkit-scrollbar {
+        height: 12px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        border-radius: $borderRad2;
+        margin: 0 5px;
+        background-color: rgba($color: #000000, $alpha: .15);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: $borderRad2;
+        background-color: rgba($color: #FFF, $alpha: .35);
+     
+    }
+}
+
+

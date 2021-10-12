@@ -1,0 +1,14 @@
+.scroller{
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: $borderRad2;
+        margin-bottom: 2px;
+        background-color: #dadbe2;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: $borderRad2;
+        background-color: #bfc4ce;
+    }
+}

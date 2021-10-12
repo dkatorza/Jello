@@ -1,0 +1,47 @@
+.quick-popup-wrapper-dialog {
+  // position: fixed;
+  // top: 50%;
+  .copy-container {
+    position: fixed;
+    h3 {
+      color: #5e6c84;
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 16px;
+      margin-bottom: 4px;
+      margin-top: 4px;
+    }
+    .MuiFormControl-root.MuiFormControl-root.copy.css-1nrlq1o-MuiFormControl-root{
+        width: 100%;
+    }
+    #copy-input{
+        padding-bottom: 30px;
+        background-color: #091e420a;
+        border-radius: 3px;
+        border-color: #1b3c7863 ;
+    }
+    #select-label {
+      background-color: #091e420a;
+      padding: 12px;
+      border: none;
+      border-radius: 3px;
+      box-shadow: none;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .create-btn-container {
+      margin-top: 10px;
+      .create-btn {
+        background-color: #0079bf;
+        border: none;
+        box-shadow: none;
+        color: #fff;
+        padding-left: 24px;
+        padding-right: 24px;
+        cursor: pointer;
+        height: 32px;
+      }
+    }
+  }
+}

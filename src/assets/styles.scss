@@ -1,0 +1,45 @@
+// Setup
+@import "setup/variables.scss";
+@import "setup/mixins.scss";
+@import "setup/typography.scss";
+@import "setup/functions.scss";
+@import "setup/base.scss";
+
+// Basics
+@import "basics/helpers.scss";
+
+
+// Components
+@import "cmps/app-header.scss";
+@import "cmps/board-header.scss";
+@import "cmps/columns.scss";
+@import "cmps/home-header.scss";
+@import "cmps/dialog-modal.scss";
+@import "cmps/dialog-side-menu";
+@import "cmps/archive-task";
+@import "cmps/copy-task";
+@import "cmps/members-task";
+// @import "cmps/board-list.scss";
+@import "cmps/description-in-dialog";
+@import "cmps/SidePopUp.css";
+@import "cmps/ChangeBackground.css";
+@import "cmps/BoardSecondHeader.scss";
+
+// @import "cmps/cover.scss";
+@import "cmps/GroupAdd.css";
+@import "cmps/Group.css";
+@import "cmps/TaskAdd.css";
+@import "cmps/Task.css";
+@import "cmps/TaskQuickMenu.css";
+@import "cmps/TaskTitleEdit.css";
+@import "cmps/QuickPopUp.css";
+@import "cmps/Labels.css";
+@import "cmps/Covers.css";
+
+
+// Pages 
+@import "pages/home-page.scss";
+@import "pages/login-signup.scss";
+@import "pages/board-list-page.scss";
+@import "pages/board-page.scss";
+

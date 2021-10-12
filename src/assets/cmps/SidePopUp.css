@@ -1,0 +1,127 @@
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper{
+    min-width: 305px;
+    max-width:305px ;
+    box-shadow: 0 12px 24px -6px #091e4240, 0 0 0 1px #091e4214;
+    background-color: #f4f5f7 !important;
+    top:44px !important;
+    position: fixed;
+    
+}
+
+.side-popup-header{
+    height: 48px;
+    margin-bottom: 8px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    padding: 0 0px;
+  
+}
+
+.side-popup-header-title{
+    border-bottom: 1px solid #091e4221;
+    box-sizing: border-box;
+    color: #172b4d;
+    display: block;
+    line-height: 48px;
+    margin: 0 12px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #172b4d;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.side-popup-close-btn{
+    color: #42526e;
+    height: 32px;
+    line-height: 32px;
+    width: 32px;
+    font-size: 20px;
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.side-popup-children-content{
+    border-bottom: 1px solid #091e4221;
+    margin: 18px 10px ;
+    padding-bottom: 18px;
+}
+
+.menu-nav-link{
+    border-radius: 3px;
+    display: block;
+    font-weight: 600;
+    line-height: 20px;
+    text-decoration: none;
+    padding: 6px 6px 6px 40px;
+    position: relative;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.menu-nav-title{
+    margin-left: 10px;
+}
+
+.menu-nav-change-bg-icon{
+    font-size: 20px;
+    height: 20px;
+    left: 18px;
+    line-height: 20px;
+    position: absolute;
+    top: 6px;
+    width: 20px;
+    background-color: #006eff;
+    border-radius: 3px;
+    margin-right: 15px;
+}
+
+.menu-nav-icon{
+    font-size: 20px; 
+    line-height: 20px;
+    position: absolute;
+    margin-right: 15px;
+    left: 18px;
+}
+
+
+.side-popup-activity-container{
+   
+    margin: 18px 10px ;
+    padding-bottom: 18px;
+
+}
+
+.side-popup-activity-header{
+    border-radius: 3px;
+    display: block;
+    font-weight: 600;
+    line-height: 20px;
+    text-decoration: none;
+    padding: 6px 6px 6px 40px;
+    position: relative;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.activity-header-title{
+    margin-left: 10px;
+}
+
+
+.activity-header-icon{
+    font-size: 20px; 
+    line-height: 20px;
+    position: absolute;
+    margin-right: 15px;
+    left: 18px;
+}
+

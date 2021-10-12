@@ -1,0 +1,46 @@
+.quick-task-editor-buttons {
+    /* left: 100%; */
+    position: absolute;
+    top: 0;
+    transform: translateX(-20px);
+    transition: opacity 85ms ease-in, transform 85ms ease-in;
+    /* width: 240px; */
+    z-index: 300;
+}
+
+.quick-task-editor-buttons-items {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 3px;
+    clear: both;
+    color: white;
+    /* display: block; */
+    float: left;
+    margin: 0 0 4px 37px;
+    padding: 6px 12px 6px 8px;
+    text-decoration: none;
+    transform: translateX(0);
+    transition: transform 85ms ease-in;
+    cursor: pointer;
+    position: relative;
+}
+
+.quick-task-editor-buttons-items:last-child{
+    margin-bottom: 50px;
+}
+
+.quick-task-editor-buttons-items:hover {
+    transform: translateX(+10px);
+}
+
+.task-quick-menu-txt{
+    margin-left: 4px;
+}
+
+.task-quick-menu-icons{
+    font-size: 16px;
+    height: 20px;
+    line-height: 20px;
+    width: 20px;
+}

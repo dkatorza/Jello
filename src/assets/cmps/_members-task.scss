@@ -1,0 +1,43 @@
+.members-container{
+    // height: 300px;
+    h3{
+        color: #5e6c84;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    line-height: 16px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    }
+    .select-member{
+        display: flex;
+        margin-bottom: 5px;
+        
+        &:hover{
+            cursor: pointer;
+            background-color: rgba(9, 30, 66, 0.04)
+        }
+        .member.member-on-card{
+            
+            background-color: #00875a;
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            
+            
+        }
+        .member-fullname{
+            line-height: 31px;
+            margin-left: 10px;
+        }
+        .v-sign{
+         position: absolute;
+         right: 10px;
+            line-height: 31px;
+        }
+    }
+}
