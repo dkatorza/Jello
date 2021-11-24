@@ -1,78 +1,51 @@
-import { storageService } from './async-storage.service'
-// const gBoards = require('../data/boards.json')
-// const gBoards = require('../data/new-board.json')
-// localStorage.setItem("boards",JSON.stringify(gBoards));
-// const gBoards = require('../data/presentation-demo-board.json')
-// const STORAGE_KEY_BOARD = 'board'
+import { utilsService } from './utils.service'
+import { httpService } from './http.service'
+import { userService } from './user.service'
 
 export const boardService = {
-    save,
-    getBoardById,
     query,
-    saveBoards
+    save,
+    getById,
+    remove
 }
 
-window.boardService = boardService
-
-async function getBoardById(boardId){
-    try{
-        const boards = await storageService.query('boards') 
-        const board = boards.find(board => board._id === boardId) 
-        
-        return board
-
-    } catch (err) {
-        throw err
-    }
-}
-
-async function query(userId) {
-    console.log('query',userId);
-
+async function query(filterBy = { ctg: '' }) {
     try {
-        const boards = await storageService.query('boards') 
-        const filterBoards = boards.filter(board => {
-            return board.createdBy._id === userId
-        })
-        // console.log(filterBoards,'board service query');
-        return filterBoards
+        return await httpService.get('board', filterBy)
     } catch (err) {
         throw err
     }
 }
 
-async function save(data) {
-    if (data._id) {
+async function getById(boardId) {
+    try {
+        return await httpService.get(`board/${boardId}`)
+    } catch (err) {
+        throw err
+    }
+}
+
+
+async function save(board) {
+    if (board._id) {
         try {
-            const boards = await storageService.query('boards')
-            const idx = boards.findIndex(board => board._id === data._id);
-            boards[idx] = data;
-            await this.saveBoards(boards)
-           return await storageService.put('board', data)
+            return await httpService.put(`board/${board._id}`, board)
         } catch (err) {
             throw err
         }
     } else {
         try {
-            return await storageService.post('board', data)
+            return await httpService.post('board', board)
         } catch (err) {
             throw err
         }
     }
 }
-async function saveBoards(data) {
+
+async function remove(boardId) {
     try {
-        return await storageService.putArray('boards', data)
+        await httpService.delete(`board/${boardId}`)
     } catch (err) {
         throw err
     }
 }
-
-    // } else {
-    //     try {
-    //         return await storageService.post('boards', data)
-    //     } catch (err) {
-    //         throw err
-    //     }
-    // }
-
