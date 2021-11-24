@@ -23,7 +23,9 @@ class _TaskQuickMenu extends React.Component {
         clickedCover: false,
     }
 
-
+    componentDidMount(){
+        console.log('gh',this.props);
+    }
 
     handleClose = (ev) => {
         ev.stopPropagation()

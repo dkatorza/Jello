@@ -104,19 +104,13 @@ class _Task extends React.Component {
 
           {(provided, snapshot) => (
             <Container className="task-container"
-
-            
-
               onMouseEnter={this.handleEditIcon}
               onMouseLeave={this.handleEditIcon}
-
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               ref={provided.innerRef}
               isDragging={snapshot.isDragging}
               >
-
-
               {this.state.isClicked &&
                 <DialogModal
                   // boardMembers={this.state.boardMembers}

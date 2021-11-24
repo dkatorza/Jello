@@ -129,7 +129,8 @@ class _Board extends React.Component {
                 <div  {...provided.droppableProps} ref={provided.innerRef} className="group-tasks-container">
                 {groups.map((group, index) => {
                   const tasks = group.tasks
-                  return ( !group.isArchived &&
+                  return (
+                    !group.isArchived &&
                     <Column
                     key={group.id}
                     group={group}
