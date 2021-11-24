@@ -45,7 +45,6 @@ class _App extends React.Component {
         {this.isHeaderAppears && <header>
           <AppHeader board={board} loggedInUser={loggedInUser} isBoardStyle={location.pathname.includes('/board')}/>
           </header>}
-
           <main>
             <Switch>
               {routes.map(route=><Route key={route.path} component={route.component} path={route.path}/>)}

@@ -1,6 +1,6 @@
-import { boardService } from "../services/board.service.js";
-import { showErrorMsg } from '../services/event-bus.service.js'
-import {userService} from '../services/user.service.js'
+import { boardService } from "../../services/board.service.js";
+import { showErrorMsg } from '../../services/event-bus.service.js'
+import {userService} from '../../services/user.service.js'
 export function onSaveBoard(board) {  
         return async dispatch => {
         try {
