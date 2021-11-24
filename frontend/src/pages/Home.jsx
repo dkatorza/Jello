@@ -51,7 +51,7 @@ class _HomePage extends React.Component {
           <section className="product">
             <div className="product-info">
               <h2>It's more than work. It's a way of working together.</h2>
-              <p>Start with a Bambello board, lists, and cards. Customize and 
+              <p>Start with a Jello board, lists, and cards. Customize and 
                 expand with more features as your teamwork grows. Manage projects, 
                 organize tasks, and build team spirit—all in one place.</p>
                 <button className="clean-link"
