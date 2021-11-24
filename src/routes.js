@@ -1,33 +1,27 @@
-import {HomePage} from '../src/pages/HomePage.jsx';
-import { BoardList } from './pages/BoardList.jsx';
-import { Board } from './pages/Board.jsx';
-import { LoginSignup } from './pages/LoginSignUp.jsx';
-const routes = [
-    {
-        path:'/',
-        component: HomePage,
-        label: 'Home | ',
-    },
-    {
-        path:'/boardlist',
-        component: BoardList,
-        label: 'Boards | ',
-    },
-    {
-        path:'/board/:boardId',
-        component: Board,
-        label: 'Board',
-    },
-    {
-        path:'/signup',
-        component: LoginSignup,
-        label: 'Singup',
-    },
-    {
-        path:'/login',
-        component: LoginSignup,
-        label: 'Login',
-    },
-]
+import { Home } from './pages/Home'
+import { Workspace } from './pages/Workspace'
+import { LoginSignup } from './pages/LoginSignup'
+import { BoardApp } from './pages/BoardApp'
 
-export default routes;
+export const routes = [
+    {
+        path: '/board/:boardId',
+        component: BoardApp,
+    },
+    {
+        path: '/login',
+        component: LoginSignup,
+    },
+    {
+        path: '/signup',
+        component: LoginSignup,
+    },
+    {
+        path: '/workspace',
+        component: Workspace,
+    },
+    {
+        path: '/',
+        component: Home,
+    }
+]
