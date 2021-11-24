@@ -1,168 +1,145 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Route } from 'react-router-dom'
 import { onSaveBoard, loadBoard } from '../store/board.actions.js';
-import { Column } from '../cmps/column.jsx';
-import { GroupAdd } from '../cmps/GroupAdd.jsx';
-import { BoardHeader } from '../cmps/BoardHeader';
-import { SidePopUp } from '../cmps/SidePopUp.jsx';
-import{BoardSecondHeader} from '../cmps/BoardSecondHeader'
+import { onLogin } from '../store/actions/app.actions'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { CardEdit } from '../cmps/CardEdit'
+import { CardList } from '../cmps/CardList'
+import { CardListAdd } from '../cmps/CardListAdd'
+import { BoardHeader } from '../cmps/BoardHeader'
 
-class _Board extends React.Component {
+class _BoardApp extends React.Component {
 
 
   state = {
-  };
+    isCardEditOpen: false,
+    currCard: null,
+    currList: null,
+    elPos: null,
+  }
+
+
 
   async componentDidMount() {
     try {
-      const { boardId } = this.props.match.params;
-         await this.props.loadBoard(boardId);
-         console.log('this.props.location',this.props.location);
+      if (!this.props.loggedInUser) this.props.onLogin()
+      const { boardId } = this.props.match.params
+      await this.props.loadBoard(boardId)
     } catch (err) {
-      console.log('err');
+      console.log(err)
     }
-    
   }
 
+  async componentDidUpdate(prevProps) {
+    const { boardId } = this.props.match.params
+    const { loadBoard, closePopover } = this.props
+    if (prevProps.match.params.boardId !== boardId) {
+      closePopover()
+      await loadBoard(boardId)
+    }
+  }
+
+  onCloseCardEdit = () => {
+    this.setState({ isCardEditOpen: false })
+  }
+
+
   onDragEnd = (result) => {
-    const { destination, source, draggableId, type } = result;
-    const {board,board: { groups },} = this.props;
+    let { board, board: { lists }, onSaveBoard } = this.props
+    const { destination, source, type } = result
+    if (!destination) return
+    const droppableIdStart = source.droppableId
+    const droppableIdEnd = destination.droppableId
+    const droppableIdxStart = source.index
+    const droppableIdxEnd = destination.index
 
-    if (!destination) return;
-
-    if (
-      destination.droppableId === source.draggableId &&
-      destination.index === source.index
-    ) {
-      return;
+    // CHANGE LOCATION BETWEEN CARD LISTS
+    if (type === 'list') {
+      const list = lists.splice(droppableIdxStart, 1)
+      lists.splice(droppableIdxEnd, 0, ...list)
+      board.lists = lists
+      onSaveBoard(board)
+      return
     }
 
-    // CHANGE LOCATION BETWEEN GROUPS
-    if (type === 'group') {
-      const newGroupOrder = [...this.props.board.groups];
-      const movedGroup = newGroupOrder.splice(source.index, 1);
-      newGroupOrder.splice(destination.index, 0, movedGroup[0]);
-      board.groups = newGroupOrder;
-      this.props.onSaveBoard(board);
-      return;
+    // CHECK AND MOVE CARDS INSIDE THE SAME CARD LIST
+    if (droppableIdStart === droppableIdEnd) {
+      const list = lists.find(list => list.id === droppableIdStart)
+      const card = list.cards.splice(droppableIdxStart, 1)
+      list.cards.splice(droppableIdxEnd, 0, ...card)
+      const listIdx = lists.indexOf(list)
+      lists[listIdx] = list
     }
 
-    const locationGroupStart = source.droppableId;
-    const locationGroupFinish = destination.droppableId;
-
-    // CHECK AND MOVE TASKS INSIDE THE SAME GROUP
-    if (locationGroupStart === locationGroupFinish) {
-      const newGroups = [...groups];
-      const indexOfSourceGroup = newGroups.findIndex(
-        (group) => group.id === locationGroupStart
-      );
-      const isolatedGroup = newGroups.splice(indexOfSourceGroup, 1);
-      const isolatedTasks = isolatedGroup.map((task) => task.tasks);
-      const currTasks = isolatedTasks[0].findIndex(
-        (task) => task.id === draggableId
-      );
-      const targetedTask = isolatedTasks[0].splice(currTasks, 1);
-      isolatedTasks[0].splice(destination.index, 0, targetedTask[0]);
-      groups[isolatedTasks[0]] = newGroups;
-      this.props.onSaveBoard(board);
-      return;
+    // CHECK AND MOVE CARDS BETWEEN CARDS LISTS
+    if (droppableIdStart !== droppableIdEnd) {
+      const listStart = lists.find(list => list.id === droppableIdStart)
+      const card = listStart.cards.splice(droppableIdxStart, 1)
+      const listEnd = lists.find(list => list.id === droppableIdEnd)
+      listEnd.cards.splice(droppableIdxEnd, 0, ...card)
+      const listStartIdx = lists.indexOf(listStart)
+      const listEndIdx = lists.indexOf(listEnd)
+      lists[listStartIdx] = listStart
+      lists[listEndIdx] = listEnd
     }
 
-    // CHECK AND MOVE TASKS BETWEEN GROUPS
-    if (locationGroupStart !== locationGroupFinish) {
-      const newGroups = [...groups];
-      const indexOfSourceGroup = newGroups.findIndex(
-        (group) => group.id === locationGroupStart
-      );
-      const isolatedStartGroup = newGroups.splice(indexOfSourceGroup, 1);
-      const isolatedStartTasks = isolatedStartGroup.map((task) => task.tasks);
-      const currTasks = isolatedStartTasks[0].findIndex(
-        (task) => task.id === draggableId
-      );
-      const targetedTask = isolatedStartTasks[0].splice(currTasks, 1);
-
-      const indexOfDestinationGroup = newGroups.findIndex(
-        (group) => group.id === locationGroupFinish
-      );
-      const isolatedDestinaionGroup = newGroups.splice(
-        indexOfDestinationGroup,
-        1
-      );
-      const isolatedDestinationTasks = isolatedDestinaionGroup.map(
-        (task) => task.tasks
-      );
-      isolatedDestinationTasks[0].splice(destination.index, 0, targetedTask[0]);
-      groups[isolatedDestinationTasks] = newGroups;
-      this.props.onSaveBoard(board);
-      return;
-    }
-    return;
+    board.lists = lists
+    onSaveBoard(board)
   };
 
   render() {
-    const { board} = this.props;
-    if (!board) return <div>loading...</div>; 
-    const { groups } = board;
+    const { onSaveBoard, board, filterBy } = this.props
+    const { currCard, currList, elPos, isCardEditOpen } = this.state
+    if (!board) return <Loader />
 
     return (
-      <div className="in-board" 
-      style={board.style.coverColor  ?
-        {background:`${board.style.coverColor}`}:
-        {backgroundImage:`url(${board.style.imgUrl})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat'}}
-         >
-         <BoardHeader/>
-         <BoardSecondHeader title={board.title}/>
-        <main className="board-container" >
-       
-         
+      <>
         <DragDropContext onDragEnd={this.onDragEnd}>
-        
-          <Droppable
-            droppableId='groups.id'
-            direction='horizontal'
-            type='group'>
-              {(provided) => (
-                <div  {...provided.droppableProps} ref={provided.innerRef} className="group-tasks-container">
-                {groups.map((group, index) => {
-                  const tasks = group.tasks
-                  return (
-                    !group.isArchived &&
-                    <Column
-                    key={group.id}
-                    group={group}
-                    tasks={tasks}
-                    index={index}
-                    board={board}
-                    onSaveBoard={this.props.onSaveBoard}
-                    />
-                    );
-                  })}
-                {provided.placeholder}
-                <GroupAdd board={board} onSaveBoard={this.props.onSaveBoard} />
-              </div>
-            )}
-          </Droppable>
+          <section className="board-app flex column">
+            <BoardHeader board={board} onSaveBoard={onSaveBoard} />
+            <Route path="/board/:boardId/:listId/:cardId" component={CardDetails} />
+            <Route path="/board/:boardId/dashboard" component={Dashboard} />
+            <Droppable droppableId="all-lists" direction="horizontal" type="list">
+              {provided => (
+                <div {...provided.droppableProps} ref={provided.innerRef} className="card-list-container flex">
+                  {board.lists.map((currList, idx) => {
+                    const cards = currList.cards
+                    return (
+                      <CardList
+                        key={currList.id}
+                        currListIdx={idx}
+                        currList={currList}
+                        onSaveBoard={onSaveBoard}
+                        board={board}
+                        cards={cards} />)
+                  })
+                  }
+                  {provided.placeholder}
+                  <CardListAdd board={board} onSaveBoard={onSaveBoard} />
+                </div>
+              )}
+            </Droppable>
+          </section>
         </DragDropContext>
-            </main>
-      </div>
-    );
+        {isCardEditOpen && <CardEdit board={board} currList={currList} card={currCard} elPos={elPos} onCloseCardEdit={this.onCloseCardEdit} />}
+      </>
+    )
   }
 }
 
 function mapStateToProps(state) {
   return {
     board: state.boardModule.board,
-    boards: state.boardModule.boards,
+    isLoading: state.boardModule.isLoading,
+    loggedInUser: state.appModule.loggedInUser,
   };
 }
 
 const mapDispatchToProps = {
   onSaveBoard,
   loadBoard,
+  onLogin,
 };
 
-export const Board = connect(mapStateToProps, mapDispatchToProps)(_Board);
+export const BoardApp = connect(mapStateToProps, mapDispatchToProps)(_BoardApp);

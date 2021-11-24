@@ -25,7 +25,6 @@ async function getById(boardId) {
     }
 }
 
-
 async function save(board) {
     if (board._id) {
         try {
