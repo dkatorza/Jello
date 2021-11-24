@@ -1,10 +1,5 @@
-import { storageService } from './async-storage.service'
-// import { httpService } from './http.service'
+import { httpService } from './http.service'
 // import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service'
-const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
-var gWatchedUser = null;
-const gUsers = require('../data/users.json')
-localStorage.setItem("user",JSON.stringify(gUsers));
 
 export const userService = {
     login,
@@ -13,119 +8,73 @@ export const userService = {
     getLoggedinUser,
     getUsers,
     getById,
-    remove,
-    update,
-    changeScore
+    updateUser,
 }
 
-window.userService = userService
-
-
-function getUsers() {
-    return storageService.query('user')
-    // return httpService.get(`user`)
-}
-
-async function getById(userId) {
-    const user = await storageService.get('user', userId)
-    // const user = await httpService.get(`user/${userId}`)
-    gWatchedUser = user;
-    return user;
-}
-function remove(userId) {
-    return storageService.remove('user', userId)
-    // return httpService.delete(`user/${userId}`)
-}
-
-async function update(user) {
-    await storageService.put('user', user)
-    // user = await httpService.put(`user/${user._id}`, user)
-    // Handle case in which admin updates other user's details
-    if (getLoggedinUser()._id === user._id) _saveLocalUser(user)
-    return user;
-}
-
-async function login(userCred) {
-    const users = await storageService.query('user')
-    const user = users.find(user => user.username === userCred.username)
-    return _saveLocalUser(user)
-
-    // const user = await httpService.post('auth/login', userCred)
-    // socketService.emit('set-user-socket', user._id);
-    // if (user) return _saveLocalUser(user)
-}
-async function signup(userCred) {
-    const user = await storageService.post('user', userCred)
-    // const user = await httpService.post('auth/signup', userCred)
-    // socketService.emit('set-user-socket', user._id);
-    return _saveLocalUser(user)
-}
-async function logout() {
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
-    // socketService.emit('unset-user-socket');
-    // return await httpService.post('auth/logout')
-}
-
-async function changeScore(by) {
-    const user = getLoggedinUser()
-    if (!user) throw new Error('Not loggedin')
-    user.score = user.score + by || by
-    await update(user)
-    return user.score
+async function login(credentials) {
+    try {
+        const user = await httpService.post('auth/login', credentials)
+        // socketService.emit('set-user-socket', user._id);
+        if (user) return _saveLocalUser(user)
+    } catch (err) {
+        throw err
+    }
 }
 
 
-function _saveLocalUser(user) {
-    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
-    return user
+async function logout(user) {
+    try {
+        sessionStorage.clear()
+        // socketService.emit('unset-user-socket');
+        return await httpService.post('auth/logout', user)
+    } catch (err) {
+        throw err
+    }
+}
+
+async function signup(userInfo) {
+    try {
+        const user = await httpService.post('auth/signup', userInfo)
+        return _saveLocalUser(user)
+    } catch (err) {
+        throw err
+    }
 }
 
 function getLoggedinUser() {
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER) || 'null')
+    let user = JSON.parse(sessionStorage.getItem('loggedinUser' || null));
+    return user
 }
 
 
-// (async ()=>{
-//     var user = {
-     
-//          "fullname": "Guest Guest",
-//          "username": "Guest",
-//          "password": "Guest",
-//          "imgUrl": "http://some-img.jpg",
-//          "userBoardIds": "b101",
-//          "mentions": [{
-//              "id": "m101",
-//              "boardId": "m101",
-//              "taskId": "t101"
-//          }]
-//      }
-//     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
-// })();
+async function getUsers() {
+    try {
+        return await httpService.get(`user`)
+    } catch (err) {
+        throw err
+    }
+}
 
 
-// "userBoardIds": ["b101","b102"] - boardlist still works
+async function getById(userId) {
+    try {
+        return httpService.get(`user/${userId}`)
+    } catch (err) {
+        throw err
+    }
+}
 
+async function updateUser(user) {
+    try {
+        await httpService.put(`user/${user.id}`, user)
+    } catch (err) {
+        throw err
+    }
+}
 
-// This IIFE functions for Dev purposes 
-// It allows testing of real time updates (such as sockets) by listening to storage events
-// (async () => {
-//     var user = getLoggedinUser()
-//     // Dev Helper: Listens to when localStorage changes in OTHER browser
+function _saveLocalUser(user) {
+    sessionStorage.setItem('loggedinUser', JSON.stringify(user))
+    return user
+}
 
-//     // Here we are listening to changes for the watched user (comming from other browsers)
-//     window.addEventListener('storage', async () => {
-//         if (!gWatchedUser) return;
-//         const freshUsers = await storageService.query('user')
-//         const watchedUser = freshUsers.find(u => u._id === gWatchedUser._id)
-//         if (!watchedUser) return;
-      
-//         gWatchedUser = watchedUser
-//     })
-// })();
-
-// This is relevant when backend is connected
-// (async () => {
-//     var user = getLoggedinUser()
-//     if (user) socketService.emit('set-user-socket', user._id)
-// })();
 
