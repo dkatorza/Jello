@@ -1,107 +1,73 @@
 import React from 'react';
-import {utilService} from '../services/util.service'
-import { userService } from '../services/user.service';
-import InputBase from '@mui/material/InputBase';
-import CloseIcon from '@mui/icons-material/Close';
+import { TextareaAutosize } from '@material-ui/core';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import { utilsService } from '../services/utils.service'
 
-export class TaskAdd extends React.Component{
+
+export class CardAdd extends React.Component{
 
     state = {
-        taskTitle: '',
-        isWrapperOpen: false,
-        loggedUser:''
+        titleTxt: ''
     }
 
-    componentDidMount = () => {
-       const loggedUser = userService.getLoggedinUser()
-       this.setState({loggedUser:loggedUser.fullname})
-    }
-    toggleTaskAdd = (ev) => {
-        const {isWrapperOpen} = this.state
-        this.setState({isWrapperOpen:!isWrapperOpen})
-    }
-    
-    handleChange =(ev) =>{
+    handleChange = (ev) => {
+        const { value } = ev.target;
         if (ev.key === 'Enter') {
-            this.toggleTaskAdd()
             ev.preventDefault();
-            this.onAddTask(ev)
-            return
+            this.onAddCard()
+            return;
         }
-        const {value} = ev.target
-        this.setState({taskTitle:value})
+        this.setState({ titleTxt: value });
     }
 
-    onAddTask =()=> {
-        const {taskTitle} = this.state
-        const {board} = this.props 
-        console.log('WWWW',board);
-        const {loggedUser} = this.state
-        const {group} = this.props
-        const groupIdx = board.groups.indexOf(group)
-        console.log('qqqq',[...board.members]);
-         const task ={
-            id: utilService.makeId(),
-            title:taskTitle,
-            description:'',
+    onAddCard = () => {
+        const { titleTxt } = this.state;
+        if (!titleTxt) {
+            this.textArea.focus();
+            return;
+        }
+
+        const { board, currList, onSaveBoard } = this.props;
+        const listIdx = board.lists.findIndex(list => list.id === currList.id);
+
+        const card = {
+            id: utilsService.makeId(),
+            title: titleTxt,
+            description: '',
             comments: [],
             checklists: [],
             members: [],
+            byMember: 'loggedinUser', 
             labelIds: [],
-            byMember:loggedUser,
             createdAt: Date.now(),
-            dueDate: 0,            
+            startDate: 0,
+            dueDate: 0,
+            attachs: [],
             style: {
-                coverColor: '',
-                imgUrl: '',
-                bgColor:''
-
-            }            
+                coverMode: '',
+                bgColor: ''
+            }
         }
-        if (task.title)
-        board.groups[groupIdx].tasks.push(task)
-        this.props.onSaveBoard(board) 
-        this.setState({taskTitle:''})  
+
+        board.lists[listIdx].cards.push(card)
+        onSaveBoard(board)
+        this.setState({ titleTxt: '' }, () => {
+            this.textArea.focus()
+        })
     }
 
     render() {
-        const {taskTitle, isWrapperOpen} = this.state
-
+        const { titleTxt } = this.state
+        const { toggleCardAdd } = this.props;
         return (
-
-            <div className="add-task-wrapper" >
-                {isWrapperOpen ? 
-                <>
-                <div className="task-add-open">
-                    
-                    <InputBase className="task-add-input"
-                        id="outlined-multiline-static"
-                        placeholder="Enter a title for this card.."
-                        size="small"
-                        autoFocus
-                        multiline
-                        rows={4}
-                        onBlur = {this.toggleTaskAdd}
-                        value={taskTitle}
-                        onChange={this.handleChange}
-                        onKeyDown = {this.handleChange}
-                    />
-                
+            <div className="card-add">
+                <TextareaAutosize className="card-add-input" ref={(textArea) => this.textArea = textArea} value={titleTxt} autoFocus onChange={this.handleChange} onKeyDown={this.handleChange} placeholder="Enter a title for this card..." aria-label="empty textarea" />
+                <div>
+                    <button className="primary-btn" onMouseDown={this.onAddCard}>Add card</button>
+                    <CloseRoundedIcon onMouseDown={() => toggleCardAdd()} />
                 </div>
-                <div className="task-add-controls-wrapper">
-                            <button onClick={this.onAddTask} className="task-add-controls">Add card</button>
-                            <a className="task-add-controls-close-btn" >
-                            <CloseIcon fontSize="medium" onClick={this.toggleTaskAdd} />
-                                </a>
-                        </div>
-                </>
-                
-                :
-                <div className="task-add-closed" onClick={(ev)=>{this.toggleTaskAdd(ev)}}>+ Add a card</div>
-                }
             </div>
         )
     }
-
 }
 
