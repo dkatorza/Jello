@@ -1,45 +1,55 @@
+// Font awesome
+@import "./fontawesome/fontawesome.scss";
+@import "./fontawesome/regular.scss";
+@import "./fontawesome/brands.scss";
+@import "./fontawesome/solid.scss";
+
 // Setup
-@import "setup/variables.scss";
-@import "setup/mixins.scss";
-@import "setup/typography.scss";
-@import "setup/functions.scss";
-@import "setup/base.scss";
+@import "./setup/variables.scss";
+@import "./setup/functions.scss";
+@import "./setup/mixins.scss";
+@import "./setup/typography.scss";
 
 // Basics
-@import "basics/helpers.scss";
+@import "./basics/base.scss";
+@import "./basics/helpers.scss";
+@import "./basics/layout.scss";
+@import "./basics/buttons.scss";
 
+//Main
+@import "./pages/app.scss";
 
-// Components
+// PAGES
+// @import "./pages/homepage.scss";
+@import "./pages/login-signup.scss";
+@import "./pages/home.scss";
+@import "./pages/workspace.scss";
+@import "./pages/board-app.scss";
+
+// CMPS
+@import "cmps/loader.scss";
 @import "cmps/app-header.scss";
-@import "cmps/board-header.scss";
-@import "cmps/columns.scss";
 @import "cmps/home-header.scss";
-@import "cmps/dialog-modal.scss";
-@import "cmps/dialog-side-menu";
-@import "cmps/archive-task";
-@import "cmps/copy-task";
-@import "cmps/members-task";
-// @import "cmps/board-list.scss";
-@import "cmps/description-in-dialog";
-@import "cmps/SidePopUp.css";
-@import "cmps/ChangeBackground.css";
-@import "cmps/BoardSecondHeader.scss";
-
-// @import "cmps/cover.scss";
-@import "cmps/GroupAdd.css";
-@import "cmps/Group.css";
-@import "cmps/TaskAdd.css";
-@import "cmps/Task.css";
-@import "cmps/TaskQuickMenu.css";
-@import "cmps/TaskTitleEdit.css";
-@import "cmps/QuickPopUp.css";
-@import "cmps/Labels.css";
-@import "cmps/Covers.css";
+@import "cmps/board-header.scss";
+@import "cmps/board-list.scss";
+@import "cmps/card-add.scss";
+@import "cmps/card-list.scss";
+@import "cmps/card-list-add.scss";
+@import "cmps/profile-avatar.scss";
+@import "cmps/screen-overlay.scss";
 
 
-// Pages 
-@import "pages/home-page.scss";
-@import "pages/login-signup.scss";
-@import "pages/board-list-page.scss";
-@import "pages/board-page.scss";
+// CardPreview
+@import "cmps/card-preview/card-preview.scss";
+@import "cmps/card-preview/card-preview-edit.scss";
+@import "cmps/card-preview/card-preview-labels.scss";
+@import "cmps/card-preview/card-preview-date.scss";
+@import "cmps/card-preview/card-preview-comments.scss";
+@import "cmps/card-preview/card-preview-checklist.scss";
+
+// Popovers
+@import "cmps/pop-overs/pop-over";
+@import "cmps/pop-overs/profile-pop-over";
+@import "cmps/pop-overs/members-pop-over";
+
 
