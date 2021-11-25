@@ -1,77 +1,137 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
-import { ReactComponent as BoardIcon } from "../assets/img/board-icon.svg";
-// import { ReactComponent as HomeIcon } from "../assets/img/home-icon.svg";
-import { ReactComponent as ArrowDown } from "../assets/img/arrow-down.svg";
-import { onLogout } from "../store/user.actions.js";
+import { ReactComponent as ElipsisIcon } from '../assets/img/icons/elipsis.svg'
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import AutosizeInput from 'react-input-autosize';
+import { ProfileAvatar } from './ProfileAvatar';
+import { boardService } from '../services/board.service'
+import { openPopover } from '../store/actions/app.actions.js'
 
 class _BoardHeader extends React.Component {
-    onLogout = () => {
-    this.props.onLogout();
-  };
-  render() {
-    const user = this.props.user;
-    if (!user) return <div></div>;
-    return (
-      <header className="board-header flex ">
-        <div className="left-container flex">
-        <div className="logo flex align-center">
-          <NavLink to="/boardlist">
-            <BoardIcon />
-            <span>Thello</span>
-          </NavLink>
-        </div>
-        <div className="flex">
-          {/* <NavLink className="btn-header home-icon" to="/boardlist">
-            <HomeIcon />
-          </NavLink> */}
-          <NavLink className="btn-board-header" to="/boardlist">
-            {/* <BoardIcon /> */}
-            <span>Boards</span>
-            <ArrowDown />
-          </NavLink>
-        </div>
-        </div>
+  state = {
+    title: '',
+    isEdit: false,
+  }
 
-        <nav>
-          {
-            <span className="user-info flex">
-              <Link
-                to={`user/${user._id}`}
-                style={{ marginRight: 10 + "px", marginTop: 5 + "px" }}
-              >
-                {user.username}
-              </Link>
-              <button
-                className="btn-header flex"
-                to="/"
-                onClick={this.onLogout}
-              >
-                <NavLink key="/" to="/">
-                  Logout
-                </NavLink>
-              </button>
-            </span>
+  componentDidMount() {
+    this.setState({ title: this.props.board.title })
+  }
+
+  handleChange = ({ target }) => {
+    let { inputWidth } = this.state
+    this.setState({ title: target.value, inputWidth })
+  }
+
+  toggleEdit = () => {
+    const { isEdit } = this.state
+    let { inputWidth } = this.state
+    if (!isEdit) inputWidth = this.h1Title.getBoundingClientRect().width
+    this.setState({ isEdit: !isEdit, inputWidth }, () => {
+      if (this.state.isEdit) this.titleInput.select()
+    })
+  }
+
+  onTitleSave = (ev) => {
+    ev.preventDefault()
+    const { title } = this.state
+    if (!title) return
+    const { board, onSaveBoard } = this.props
+    board.title = title
+    onSaveBoard(board)
+    this.toggleEdit()
+  }
+
+  onToggleFav = () => {
+    const { board, onSaveBoard } = this.props
+    board.isFavorite = !board.isFavorite
+    onSaveBoard(board)
+  }
+
+  onOpenPopover = (ev, PopoverName, member) => {
+    const elPos = ev.target.getBoundingClientRect()
+    const props = { member, isInCard: false, showStatus: true }
+    this.props.openPopover(PopoverName, elPos, props)
+  }
+
+  get isFilterOn() {
+    const { labels, txt, members } = this.props.filterBy
+    return labels.length || members.length || txt
+  }
+
+  get searchResultsCount() {
+    const { board, filterBy } = this.props
+    return board.lists.reduce((acc, list) => {
+      const filteredList = boardService.getFilteredList(list, filterBy)
+      acc += filteredList.cards.length
+      return acc
+    }, 0)
+
+
+  }
+
+  resetFilter = (ev) => {
+    ev.stopPropagation()
+    this.props.setFilter({ txt: '', labels: [], members: [] })
+  }
+
+  render() {
+    const { board } = this.props
+    const { isEdit, title } = this.state
+    return (
+      <div className="board-header">
+        <div className="board-title" >
+          {isEdit ?
+            <form onSubmit={this.onTitleSave}>
+              <AutosizeInput
+                name="form-field-name"
+                value={title}
+                onChange={this.handleChange}
+                ref={(input) => { this.titleInput = input }}
+                onBlur={this.onTitleSave}
+              />
+            </form>
+            :
+            <h1 onClick={this.toggleEdit} ref={(h1) => { this.h1Title = h1 }}>{board.title} </h1>
           }
-        </nav>
-      </header>
-    );
+        </div>
+        <button className="board-btn" onClick={this.onToggleFav}>
+          <i className={`far fa-star icon-sm star-icon ${board.isFavorite ? 'favorite' : ''}`}></i>
+        </button>
+        <span className="divider"></span>
+        <div className="flex header-section">
+
+          <div className="board-header-members flex align-center">
+            <AvatarGroup>
+              {board.members.map(member => <ProfileAvatar key={member._id} member={member}
+                onOpenPopover={this.onOpenPopover} size={28} showStatus={true} />)}
+            </AvatarGroup>
+
+            <button className="wide-layout" onClick={(ev) => this.onOpenPopover(ev, 'INVITE')}>Invite</button>
+          </div>
+          <button className="board-btn" onClick={(ev) => this.onOpenPopover(ev, 'MENU')}>
+            <ElipsisIcon />
+            <span className="wide-layout">Show Menu</span>
+            <ElementOverlay />
+          </button>
+        </div>
+      </div>
+    )
   }
 }
 
+
+
+
 function mapStateToProps(state) {
   return {
-    users: state.userModule.users,
-    user: state.userModule.user,
-    isLoading: state.systemModule.isLoading,
-  };
+    board: state.boardModule.board,
+    loggedInUser: state.appModule.loggedInUser,
+    filterBy: state.boardModule.filterBy
+  }
 }
-const mapDispatchToProps = {
-  onLogout,
-};
 
-export const BoardHeader = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(_BoardHeader);
+const mapDispatchToProps = {
+  openPopover,
+}
+
+export const BoardHeader = connect(mapStateToProps, mapDispatchToProps)(_BoardHeader)
