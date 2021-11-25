@@ -1,14 +1,13 @@
-import { Component } from 'react';
+import React from 'react';
 import { Popover } from './Popover';
 import { boardService } from '../../services/board.service'
 import { PopoverMemberPreview } from './PopoverMemberPreview'
 import { onSaveBoard } from '../../store/actions/board.actions';
 import { connect } from 'react-redux'
-import { socketService } from '../../services/socket.service'
 
 
 
-class _PopoverMembers extends Component {
+class _PopoverMembers extends React.Component {
 
     state = {
         inputTxt: '',
@@ -28,27 +27,8 @@ class _PopoverMembers extends Component {
     }
 
     toggleMember = (member) => {
-        const { card, board, loggedInUser } = this.props
+        const { card, board} = this.props
         const idx = card.members.findIndex(cardMember => cardMember._id === member._id)
-        let savedActivity
-        if (idx === -1) {
-            card.members.push(member)
-            if (member._id === loggedInUser._id) {
-                savedActivity = boardService.createActivity('joined', '', card)
-            } else {
-                savedActivity = boardService.createActivity('added', member.fullname, card)
-            }
-        } else {
-            card.members.splice(idx, 1)
-            if (member._id === loggedInUser._id) {
-                savedActivity = boardService.createActivity('left', '', card)
-            } else {
-                savedActivity = boardService.createActivity('removed', member.fullname, card)
-            }
-
-        }
-        socketService.emit('app newActivity', savedActivity)
-        board.activities.unshift(savedActivity)
         const updatedBoard = boardService.updateCardInBoard(board, card)
         this.props.onSaveBoard(updatedBoard)
     }
