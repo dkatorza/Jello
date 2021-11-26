@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { openQuickPopUp, onLogout, closePopover } from '../store/actions/app.actions'
+import { openPopover, onLogout, closePopover } from '../store/actions/app.actions'
 import { ReactComponent as HomeIcon } from '../assets/img/icons/home.svg'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { ReactComponent as AddIcon } from '../assets/img/icons/add.svg'
