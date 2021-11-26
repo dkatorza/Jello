@@ -70,7 +70,6 @@ class _TaskQuickMenu extends React.Component {
         this.setState({ clickedCover: !this.state.clickedCover })
     }
 
-
     render() {
         const { isMenuOpen, isQuickPopUpOpen } = this.state
         const { task, width, height, right, onSaveBoard, board, coverColor, group, } = this.props
