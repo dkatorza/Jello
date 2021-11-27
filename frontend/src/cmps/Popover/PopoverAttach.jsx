@@ -1,9 +1,9 @@
-import { Component } from "react"
+import React from 'react';
 import { FileUpload } from "../FileUpload"
 import { Popover } from "./Popover"
 import { utilsService } from '../../services/utils.service'
 
-export class PopoverAttach extends Component {
+export class PopoverAttach extends React.Component {
 
     state = {
         file: null,

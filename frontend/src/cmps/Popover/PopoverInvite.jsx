@@ -1,10 +1,12 @@
+import React from 'react';
 import { onSaveBoard } from "../../store/actions/board.actions"
 import { Popover } from "./Popover"
-import { Component } from 'react'
 import { connect } from 'react-redux'
 import { PopoverMemberPreview } from './PopoverMemberPreview'
 import { userService } from '../../services/user.service'
-class _PopoverInvite extends Component {
+
+
+class _PopoverInvite extends React.Component {
 
     state = {
         memberTxt: '',

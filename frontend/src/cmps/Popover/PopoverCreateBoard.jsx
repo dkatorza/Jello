@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React from 'react';
 import { connect } from 'react-redux'
 import { ScreenOverlay } from "../ScreenOverlay";
 import { ColorPalette } from "../ColorPalette";
@@ -6,7 +6,7 @@ import { closePopover } from "../../store/actions/app.actions";
 import { onSaveBoard } from "../../store/actions/board.actions";
 import { withRouter } from 'react-router-dom';
 
-class _PopoverCreateBoard extends Component {
+class _PopoverCreateBoard extends React.Component {
 
     state = {
         title: '',

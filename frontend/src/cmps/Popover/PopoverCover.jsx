@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React from 'react';
 import { utilsService } from '../../services/utils.service';
 import { ColorPalette } from '../ColorPalette';
 import { FileUpload } from '../FileUpload';
@@ -7,7 +7,7 @@ import { boardService } from '../../services/board.service'
 import { onSaveBoard } from '../../store/actions/board.actions'
 import { connect } from 'react-redux';
 
-class _PopoverCover extends Component {
+class _PopoverCover extends React.Component {
 
     state = {
         bgColor: this.props.card.style?.bgColor || '',

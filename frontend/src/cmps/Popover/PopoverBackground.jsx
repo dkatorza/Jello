@@ -1,6 +1,6 @@
-import { Popover } from './Popover'
 import { connect } from 'react-redux'
 import { onSaveBoard } from '../../store/actions/board.actions'
+import { Popover } from './Popover'
 import { ColorPalette } from '../ColorPalette'
 import { ImagePalette } from '../ImagePalette'
 import { BackToPrevPopover } from "./BackToPrevPopover"

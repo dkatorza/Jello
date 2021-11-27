@@ -1,13 +1,13 @@
 
+import React from 'react';
 import { connect } from 'react-redux';
 import { utilsService } from '../../services/utils.service';
-import { Component } from 'react';
 import { boardService } from '../../services/board.service';
 import { closePopover } from '../../store/actions/app.actions';
 import { onSaveBoard } from "../../store/actions/board.actions";
 import { Popover } from './Popover';
 
-class _PopoverChecklist extends Component {
+class _PopoverChecklist extends React.Component {
 
     state = {
         title: ''

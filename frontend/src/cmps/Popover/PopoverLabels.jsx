@@ -1,4 +1,4 @@
-import { Component } from "react"
+import React from 'react';
 import { PopoverLabelPreview } from "./PopoverLabelPreview"
 import { Popover } from './Popover'
 import { PopoverLabelEdit } from "./PopoverLabelEdit"
@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { boardService } from '../../services/board.service'
 import { utilsService } from "../../services/utils.service";
 
-class _PopoverLabels extends Component {
+class _PopoverLabels extends React.Component {
 
     state = {
         inputTxt: '',

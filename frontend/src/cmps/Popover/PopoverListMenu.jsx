@@ -1,7 +1,7 @@
-import { Component } from "react";
+import React from 'react';
 import { Popover } from "./Popover";
 
-export class PopoverListMenu extends Component{
+export class PopoverListMenu extends React.Component{
 
     onDeleteList=()=>{
         const {currList,onSaveBoard,board,closePopover}=this.props
