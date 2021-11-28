@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom'
-import { onSaveBoard, loadBoard } from '../store/board.actions.js';
+import { onSaveBoard, loadBoard, unsetBoard } from '../store/board.actions.js';
 import { onLogin } from '../store/actions/app.actions'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { closePopover } from '../store/actions/app.actions'
+import { eventBusService } from '../services/event-bus.service'
+import { Loader } from '../cmps/Loader'
 import { CardEdit } from '../cmps/CardEdit'
 import { CardList } from '../cmps/CardList'
 import { CardListAdd } from '../cmps/CardListAdd'
@@ -26,11 +29,14 @@ class _BoardApp extends React.Component {
       if (!this.props.loggedInUser) this.props.onLogin()
       const { boardId } = this.props.match.params
       await this.props.loadBoard(boardId)
+      this.removeEvent = eventBusService.on('card-edit', ({ elPos, card, currList }) => {
+        this.setState({ isCardEditOpen: true, currCard: card, elPos, currList })
+        console.log(this.props);
+      });
     } catch (err) {
       console.log(err)
     }
   }
-
   async componentDidUpdate(prevProps) {
     const { boardId } = this.props.match.params
     const { loadBoard, closePopover } = this.props
@@ -38,6 +44,14 @@ class _BoardApp extends React.Component {
       closePopover()
       await loadBoard(boardId)
     }
+  }
+
+  componentWillUnmount() {
+    if (this.removeEvent) {
+      this.removeEvent()
+    }
+    closePopover()
+    this.props.unsetBoard()
   }
 
   onCloseCardEdit = () => {
@@ -106,7 +120,7 @@ class _BoardApp extends React.Component {
                   {board.lists.map((currList, idx) => {
                     const cards = currList.cards
                     return (
-                      <CardList
+                      <CardList filterBy={filterBy}
                         key={currList.id}
                         currListIdx={idx}
                         currList={currList}
@@ -137,9 +151,11 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  onSaveBoard,
   loadBoard,
+  onSaveBoard,
+  unsetBoard,
   onLogin,
+  closePopover
 };
 
 export const BoardApp = connect(mapStateToProps, mapDispatchToProps)(_BoardApp);

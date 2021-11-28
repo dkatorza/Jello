@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import React from 'react';
 import { connect } from 'react-redux'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Link } from 'react-router-dom'
-import { GoogleLogin } from 'react-google-login'
+import { onLogin, onSignup } from '../store/user.actions'
+import { userService } from "../services/user.service.js";
 import { ReactComponent as LoginSignupLogo } from '../assets/img/login-signup/login-signup-logo.svg'
 import { ReactComponent as LogoRight } from '../assets/img/login-signup/right-logo.svg'
 import { ReactComponent as LogoLeft } from '../assets/img/login-signup/left-logo.svg'
-import { onLogin, onSignup } from '../store/user.actions'
-import { userService } from "../services/user.service.js";
-// import { onGoogleLogin } from '../store/user.actions'
+import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'
 
 
-export class _LoginSignup extends Component {
+export class _LoginSignup extends React.Component {
 
     state = {
-        loggedinUser : userService.getLoggedinUser(),
+        loggedinUser: userService.getLoggedinUser(),
         userInfo: {
             fullname: '',
             username: '',
@@ -29,16 +28,15 @@ export class _LoginSignup extends Component {
     }
 
     componentDidMount() {
-        const { loggedinUser } = this.state;
-        console.log(loggedinUser)
-        if (loggedinUser) this.props.history.push('/boardlist')
+        const { loggedinUser } = this.props
+        if (loggedinUser) this.props.history.push('/workspace')
         const pageMode = this.props.location.pathname === '/login' ? 'login' : 'signup'
         this.setState({ pageMode })
     }
 
     componentDidUpdate() {
-        const { loggedInUser } = this.state;
-        if (loggedInUser) this.props.history.push('/boardlist')
+        const { loggedInUser } = this.props
+        if (loggedInUser) this.props.history.push('/workspace')
     }
 
     validate = (values) => {
@@ -65,16 +63,6 @@ export class _LoginSignup extends Component {
         pageMode === 'login' ? onLogin(values) : onSignup(values)
     }
 
-    onSuccessGoogle = (res) => {
-        const { tokenId } = res
-        const { onGoogleLogin } = this.props
-        onGoogleLogin(tokenId)
-    }
-
-    onFailureGoogle = (res) => {
-        console.log('Login with google failed', res)
-    }
-
 
     render() {
         const { pageMode, credentials, userInfo } = this.state
@@ -83,11 +71,11 @@ export class _LoginSignup extends Component {
         return (<section className="login-signup-container">
             <Link to="/" className="clean-link"><div className="logo flex align-center justify-center">
                 <LoginSignupLogo />
-                <h1>thello</h1>
+                <h1>Jello</h1>
             </div>
             </Link>
             {pageMode === 'login' && <div className="login-signup flex column">
-                <h3>Log in to thello</h3>
+                <h3>Log in to Jello</h3>
                 <Formik initialValues={credentials} onSubmit={this.onSubmit} >
                     <Form className="flex column">
                         <Field type="username" placeholder="Enter username" name="username" autoFocus />
@@ -99,14 +87,6 @@ export class _LoginSignup extends Component {
                     </Form>
                 </Formik>
                 <p>OR</p>
-                <GoogleLogin
-                    className="google-login-btn flex align-center justify-center"
-                    clientId='640315421255-e4mv3dirnt2lbm4ati92b1euclri0j8d.apps.googleusercontent.com'
-                    buttonText='Continue with Google'
-                    onSuccess={this.onSuccessGoogle}
-                    onFailure={this.onFailureGoogle}
-                    cookiePolicy={'single_host_origin'}
-                />
                 <hr />
                 <Link to="/signup">Sign up for an account</Link>
             </div>}
@@ -139,14 +119,16 @@ export class _LoginSignup extends Component {
 }
 
 function mapStateToProps(state) {
-    return {}
+    return {
+        loggedInUser: state.appModule.loggedInUser,
+        loginErr: state.appModule.loginErr
+    }
 }
 
 
 const mapDispatchToProps = {
     onLogin,
     onSignup
-    // onGoogleLogin
 }
 
 export const LoginSignup = connect(mapStateToProps, mapDispatchToProps)(_LoginSignup)

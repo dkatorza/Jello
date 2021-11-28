@@ -5,7 +5,11 @@ import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import AutosizeInput from 'react-input-autosize';
 import { ProfileAvatar } from './ProfileAvatar';
 import { boardService } from '../services/board.service'
+import CloseIcon from '@material-ui/icons/Close';
 import { openPopover } from '../store/actions/app.actions.js'
+import { ElementOverlay } from '../cmps/Popover/ElementOverlay';
+import { setFilter } from '../store/actions/board.actions.js'
+
 
 class _BoardHeader extends React.Component {
   state = {
@@ -65,8 +69,6 @@ class _BoardHeader extends React.Component {
       acc += filteredList.cards.length
       return acc
     }, 0)
-
-
   }
 
   resetFilter = (ev) => {
@@ -83,6 +85,7 @@ class _BoardHeader extends React.Component {
           {isEdit ?
             <form onSubmit={this.onTitleSave}>
               <AutosizeInput
+
                 name="form-field-name"
                 value={title}
                 onChange={this.handleChange}
@@ -108,6 +111,13 @@ class _BoardHeader extends React.Component {
 
             <button className="wide-layout" onClick={(ev) => this.onOpenPopover(ev, 'INVITE')}>Invite</button>
           </div>
+          {this.isFilterOn && <Link className="board-filter-results flex align-center" to="#"
+            onClick={(ev) => this.onOpenPopover(ev, 'BOARD_FILTER')}>
+            <span>{this.searchResultsCount} search results</span>
+            <span className="flex align-center" onClick={this.resetFilter}>
+              <CloseIcon />
+            </span>
+          </Link>}
           <button className="board-btn" onClick={(ev) => this.onOpenPopover(ev, 'MENU')}>
             <ElipsisIcon />
             <span className="wide-layout">Show Menu</span>
