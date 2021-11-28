@@ -37,6 +37,8 @@
 @import "cmps/card-list-add.scss";
 @import "cmps/profile-avatar.scss";
 @import "cmps/screen-overlay.scss";
+@import "cmps/color-palette";
+@import "cmps/image-palette";
 
 
 // CardPreview
@@ -49,7 +51,23 @@
 
 // Popovers
 @import "cmps/pop-overs/pop-over";
+@import "cmps/pop-overs/edit-pop-over";
 @import "cmps/pop-overs/profile-pop-over";
+@import "cmps/pop-overs/labels-pop-over";
 @import "cmps/pop-overs/members-pop-over";
+@import "cmps/pop-overs/date-pop-over";
+@import "cmps/pop-overs/checklist-pop-over";
+@import "cmps/pop-overs/attach-pop-over";
+@import "cmps/pop-overs/cover-pop-over";
+@import "cmps/pop-overs/move-pop-over";
+@import "cmps/pop-overs/list-menu";
+@import "cmps/pop-overs/invite-pop-over";
+@import "cmps/pop-overs/menu-pop-over.scss";
+@import "cmps/pop-overs/background-pop-over";
+@import "cmps/pop-overs/archive-pop-over";
+@import "cmps/pop-overs/activity-pop-over";
+@import "cmps/pop-overs/board-filter-pop-over";
+@import "cmps/pop-overs/create-board-pop-over";
+@import "cmps/pop-overs/misc-popovers";
 
 

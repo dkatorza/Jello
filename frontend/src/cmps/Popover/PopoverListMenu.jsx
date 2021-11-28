@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Popover } from "./Popover";
 
 export class PopoverListMenu extends React.Component{
