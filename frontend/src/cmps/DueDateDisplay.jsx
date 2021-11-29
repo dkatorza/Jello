@@ -1,10 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { onSaveBoard } from '../store/actions/board.actions'
+import { openPopover } from '../store/actions/app.actions';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { ReactComponent as DropdownIcon } from '../assets/img/icons/dropdown.svg'
-import { openPopover } from '../store/actions/app.actions';
-import { connect } from 'react-redux';
-import { onSaveBoard } from '../store/actions/board.actions'
 
 class _DueDateDisplay extends React.Component {
 

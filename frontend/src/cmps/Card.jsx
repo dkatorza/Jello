@@ -8,8 +8,10 @@ import { CardPreviewLabel } from './CardPreview/CardPreviewLabel'
 import { CardPreviewComments } from './CardPreview/CardPreviewComments'
 import { Subject as SubjectIcon } from '@material-ui/icons'
 import { onSaveBoard } from '../store/actions/board.actions'
+import { openPopover } from '../store/actions/app.actions'
 import EditIcon from '@material-ui/icons/CreateOutlined'
 import { TextareaAutosize } from '@material-ui/core';
+import { eventBusService } from '../services/event-bus.service'
 
 class _Card extends React.Component {
 
@@ -155,6 +157,7 @@ class _Card extends React.Component {
 
 const mapDispatchToProps = {
   onSaveBoard,
+  openPopover
 }
 
 export const Card = connect(null, mapDispatchToProps)(_Card)

@@ -1,197 +1,119 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Droppable, Draggable } from 'react-beautiful-dnd';
-import styled from 'styled-components'
-import { Task } from './Task.jsx'
-import { onSaveBoard, openQuickPopUp } from '../store/board.actions';
-import { PopUpHandler } from './PopUpHandler'
-import { QuickPopUp } from './QuickPopUp'
-import { TaskAdd } from './TaskAdd'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import {GroupPopUp} from './GroupPopUp'
-import { GroupPopMenu } from './GropPopMenu.jsx';
+import { boardService } from '../services/board.service'
+import { CardPreview } from './CardPreview/CardPreview'
+import { CardAdd } from './CardAdd'
+import { ReactComponent as AddIcon } from '../assets/img/icons/add.svg'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { openPopover, closePopover } from '../store/actions/app.actions'
 
-//Need to convert it to scss
-const Container = styled.div`
-box-sizing:border-box;
-display: inline-block;
-margin: 4px;
-border-radius: 3px;
-background-color:#ebecf0;
-min-width: 272px;
-max-width:272px;
-white-space: normal;
-vertical-align: top;
-overflow-y: hidden;
-overflow-x: hidden;
-max-height:100%
 
-`;
-
-const Title = styled.h2`    
-box-sizing: border-box;
-width:100%;
-font-weight: 600;
-white-space:pre;
-overflow: hidden;
-white-space: pre-wrap;
-word-break:break-word;
-font-size: 14px;
-line-height: 24px;
-min-height: 20px;
-padding: 4px 8px;
-position: relative;
-`
-
-const TaskList = styled.div`
-background-color: ${props => (props.isDraggingOver ? `#e1e1e1` : 'inherit')};
-flex: 1 1 auto;
-margin: 0 4px;
-min-height:20px;
-overflow-x: hidden;
-overflow-y:auto ;
-padding: 0 4px;
-box-sizing: border-box;
-position: relative;
-white-space: normal;
-max-height:70vh;
-`;
-
-class _Column extends React.Component {
+class _CardList extends React.Component {
 
     state = {
-        isTitleEdit: false,
-        groupTitle: '',
-        isMenuOpen: false,
-        isGroupPopUpOpen: false,
-        left: 0,
-        top: 0,
+        isEditTitle: false,
+        titleTxt: '',
+        isAddCardOpen: false,
     }
 
-    componentDidMount() {
-        const title = this.props.group.title
-        this.setState({ groupTitle: title })
+    toggleEditTitle = () => {
+        const { isEditTitle } = this.state
+        const { currList } = this.props
+        this.setState({ isEditTitle: !isEditTitle, titleTxt: currList.title });
     }
 
-    toggleTitleEdit = (ev) => {
-        const { isTitleEdit } = this.state
-        this.setState({ isTitleEdit: !isTitleEdit })
+    onSaveTitle = () => {
+        this.toggleEditTitle();
+        const { titleTxt } = this.state
+        const { board, currList, onSaveBoard } = this.props
+        const listIdx = board.lists.findIndex(list => list.id === currList.id)
+        board.lists[listIdx].title = titleTxt
+        onSaveBoard(board)
+    }
+
+    toggleCardAdd = () => {
+        const { isAddCardOpen } = this.state
+        this.setState({ isAddCardOpen: !isAddCardOpen })
     }
 
     handleChange = (ev) => {
         if (ev.key === 'Enter') {
-            ev.stopPropagation();
-            this.onEditGroupTitle()
-            this.toggleTitleEdit()
+            this.onSaveTitle()
             return
         }
-        const { value } = ev.target
-        this.setState({ groupTitle: value })
+        const { value } = ev.target;
+        this.setState({ titleTxt: value });
     }
 
-    onEditGroupTitle = () => {
-        const { group, onSaveBoard, board } = this.props
-        const { groupTitle } = this.state
-        if (!groupTitle.length) return
-        group.title = this.state.groupTitle
-        onSaveBoard(board)
-
-        this.toggleTitleEdit()
-        return
+    get filteredList() {
+        const { currList, filterBy } = this.props
+        if (!currList) return null
+        return boardService.getFilteredList(currList, filterBy)
     }
 
-    sendToArchive = ({ target }) => {
-        const { group, onSaveBoard, board } = this.props
-        if (target.name === 'archive') {
-            group.isArchived = true
-            onSaveBoard(board)
+    onOpenPopover = (ev, PopoverName) => {
+        const elPos = ev.target.getBoundingClientRect()
+        const { board, currList, onSaveBoard, closePopover } = this.props
+        const props = {
+            currList,
+            board,
+            onSaveBoard,
+            closePopover
         }
+        this.props.openPopover(PopoverName, elPos, props)
     }
 
-    setPopUpDims = (ev) => {
-        console.log('evv', ev);
-        const cmpName = ev.target.name
-        const cmpTitle = ev.target.title
-        const group = this.props
-        // const task = this.props
-        const menuBtnDims = ev.target.getBoundingClientRect();
-        let { top, left } = menuBtnDims;
-        this.props.openQuickPopUp(top, left, cmpName, cmpTitle, group.id)
-        console.log(top, left);
-        const { isGroupPopUpOpen } = this.state;
-        this.setState({ isGroupPopUpOpen: !isGroupPopUpOpen })
-    };
-
- 
 
     render() {
-        const { board, group, onSaveBoard } = this.props
-        const { isTitleEdit, groupTitle,isGroupPopUpOpen } = this.state
-
-        if (!board) return <div>loading...</div>
+        const { board, currList, onSaveBoard, currListIdx } = this.props
+        const { isEditTitle, isAddCardOpen, titleTxt } = this.state
         return (
-            <>
-                <Draggable draggableId={this.props.group.id} index={this.props.index}>
-                    {(provided) => (
-                        <Container {...provided.draggableProps} ref={provided.innerRef}{...provided.dragHandleProps}
-                        >
-                            <div className="group-header"  ref={(div) => { this.groupDims = div; }}>
-
-                                <MoreHorizIcon className="group-header-tool" fontSize="small"
-                                    style={{ fontSize: '14px', height: '32px', lineHeight: '20px', width: '32px' }}
-                                    name="GROUPTOOLS" group={group} title={'List actions'}
-                                    onClick={(ev) => { this.setPopUpDims(ev) }}
-                                />
-                                  {isGroupPopUpOpen ? <GroupPopMenu title={'List actions'} > <GroupPopUp group={group}/> </GroupPopMenu> : ''}
-                                {isTitleEdit ?
-                                    <input type="text" className="group-edit-input"
-                                        autoFocus
-                                        onBlur={this.onEditGroupTitle}
-                                        value={groupTitle}
-                                        onChange={this.handleChange}
-                                        onKeyDown={this.handleChange}
-                                    />
-                                    :
-                                    <Title onClick={(ev) => { this.toggleTitleEdit(ev) }}>{this.props.group.title}</Title>
-                                }
-                            </div>
-                            <Droppable droppableId={this.props.group.id} type="task" >
-                                {(provided, snapshot) => (
-                                    <>
-                                        <TaskList className="scroller" ref={provided.innerRef} {...provided.droppableProps}
-                                            isDraggingOver={snapshot.isDraggingOver}>
-                                            {this.props.tasks.map((task, index) => (
-                                                !task.isArchived && <Task key={task.id} task={task} index={index}
-                                                    board={this.props.board} groupTitle={this.props.group.title} onSaveBoard={onSaveBoard}
-                                                    group={group}
-                                                />
-                                            ))}
-                                            {provided.placeholder}
-
-                                        </TaskList>
-                                    </>
-
-                                )}
-
-                            </Droppable>
-                            <TaskAdd board={board} group={group} onSaveBoard={onSaveBoard} />
-                        </Container>
-
-                    )}
-                </Draggable>
-
-            </>
+            <Draggable draggableId={currList.id} index={currListIdx}>
+                {provided => (
+                    <div className="card-list-wrapper" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} >
+                        <Droppable droppableId={currList.id}>
+                            {provided => (
+                                <div className="card-list" ref={provided.innerRef} {...provided.droppableProps}>
+                                    <div className="card-list-header">
+                                        {isEditTitle ?
+                                            <input type="text" className="card-list-header-input" value={titleTxt} autoFocus
+                                                onFocus={(ev) => ev.target.select()} onBlur={this.onSaveTitle}
+                                                onChange={this.handleChange} onKeyDown={this.handleChange} />
+                                            :
+                                            <h2 onClick={this.toggleEditTitle}>{currList.title}</h2>
+                                        }
+                                        <div onClick={(ev) => this.onOpenPopover(ev, 'LIST_MENU')} className="card-list-btn-menu">
+                                            <i className="fas fa-ellipsis-h"></i>
+                                        </div>
+                                    </div>
+                                    <div className="card-list-cards" ref={(cards) => { this.elCardsContainer = cards }}>
+                                        {this.filteredList.cards.map((card, idx) => <CardPreview key={card.id} card={card}
+                                            cardIdx={idx} currList={currList} board={board}
+                                            onSaveBoard={onSaveBoard} />)}
+                                        {isAddCardOpen &&
+                                            <CardAdd board={board} currList={currList} onSaveBoard={onSaveBoard}
+                                                toggleCardAdd={this.toggleCardAdd} elCardsContainer={this.elCardsContainer} />
+                                        }
+                                        {provided.placeholder}
+                                    </div>
+                                    {!isAddCardOpen &&
+                                        <div className="card-list-footer" onClick={this.toggleCardAdd}>
+                                            <AddIcon /> Add {currList.cards.length > 1 ? 'another' : ''} card
+                                        </div>
+                                    }
+                                </div>
+                            )}
+                        </Droppable>
+                    </div>
+                )}
+            </Draggable>
         )
     }
 }
-function mapStateToProps(state) {
-    return {
-        board: state.boardModule.board,
-        currPopUp: state.boardModule.currPopUp,
-    };
-}
+
 const mapDispatchToProps = {
-onSaveBoard,
-openQuickPopUp
+    openPopover,
+    closePopover
 }
-export const Column = connect(mapStateToProps, mapDispatchToProps)(_Column)
+
+export const CardList = connect(null, mapDispatchToProps)(_CardList)

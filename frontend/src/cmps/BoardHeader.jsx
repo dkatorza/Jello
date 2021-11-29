@@ -1,13 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { ReactComponent as ElipsisIcon } from '../assets/img/icons/elipsis.svg'
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import CloseIcon from '@material-ui/icons/Close';
 import AutosizeInput from 'react-input-autosize';
+import { ElementOverlay } from '../cmps/Popover/ElementOverlay';
 import { ProfileAvatar } from './ProfileAvatar';
 import { boardService } from '../services/board.service'
-import CloseIcon from '@material-ui/icons/Close';
 import { openPopover } from '../store/actions/app.actions.js'
-import { ElementOverlay } from '../cmps/Popover/ElementOverlay';
 import { setFilter } from '../store/actions/board.actions.js'
 
 
@@ -142,6 +143,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   openPopover,
+  setFilter
 }
 
 export const BoardHeader = connect(mapStateToProps, mapDispatchToProps)(_BoardHeader)

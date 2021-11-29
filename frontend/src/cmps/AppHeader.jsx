@@ -7,26 +7,29 @@ import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { ReactComponent as AddIcon } from '../assets/img/icons/add.svg'
 import { ReactComponent as BellIcon } from '../assets/img/icons/notific-bell.svg'
 import { ProfileAvatar } from './ProfileAvatar'
+import { ElementOverlay } from "./Popover/ElementOverlay";
+
 
 class _AppHeader extends React.Component {
+
     state = {
         filterTxt: '',
         currOpenModal: '',
     }
-
 
     toggleCurModal = (modalName = '') => {
         if (this.state.currOpenModal === modalName) this.setState({ currOpenModal: '' })
         else this.setState({ currOpenModal: modalName })
     }
 
-    onQuickPopUp = (ev, popoverName) => {
-        const { openQuickPopUp , onLogout, history, loggedInUser} = this.props
+    onOpenPopover = (ev, popoverName) => {
+        const { openPopover, onLogout, history, loggedInUser, closePopover } = this.props
         let elPos = ev.target.getBoundingClientRect()
         const props = popoverName === 'PROFILE' ?
             {
                 logOutUser: () => {
                     onLogout(loggedInUser)
+                    closePopover()
                     history.push('/')
                 },
                 member: loggedInUser,
@@ -34,7 +37,7 @@ class _AppHeader extends React.Component {
                 isLoggedInUser: true
             }
             : null
-            openQuickPopUp(popoverName, elPos, props)
+        openPopover(popoverName, elPos, props)
     }
 
     onLogout = () => {
@@ -92,6 +95,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
     onLogout,
+    openPopover,
+    closePopover
+
 }
 
 export const AppHeader = connect(mapStateToProps, mapDispatchToProps)(withRouter(_AppHeader))

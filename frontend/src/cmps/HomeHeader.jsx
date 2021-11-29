@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { ReactComponent as HomepageLogo } from '../assets/img/logos/home-logo.svg'
 
 
