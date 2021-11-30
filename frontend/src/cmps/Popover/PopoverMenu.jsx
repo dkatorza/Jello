@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Popover } from "./Popover"
+import { ActivitiesList } from "../ActivitiesList"
 import { onSaveBoard } from '../../store/actions/board.actions'
 import { openPopover } from '../../store/actions/app.actions'
 import { ReactComponent as SearchIcon } from '../../assets/img/icons/search.svg'

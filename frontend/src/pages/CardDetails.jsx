@@ -14,6 +14,7 @@ import { CardDescription } from '../cmps/CardDetails/CardDescription'
 import { CardChecklists } from '../cmps/CardDetails/CardChecklists'
 import { CardDetailsActions } from '../cmps/CardDetails/CardDetailsActions'
 import { CardDetailsCover } from '../cmps/CardDetails/CardDetailsCover'
+import { CardActivities } from '../cmps/CardDetails/CardActivities'
 import { CardAttachments } from '../cmps/CardDetails/CardAttachments'
 import { Loader } from '../cmps/Loader'
 
@@ -178,6 +179,7 @@ class _CardDetails extends React.Component {
                                 card={card}
                                 checklists={checklists}
                                 onSaveCardChecklists={this.onSaveCardChecklists} />
+                            <CardActivities card={card} activities={activities} />
                         </div>
                         <div className="card-details-sidebar flex column full">
                             <CardDetailsActions

@@ -42,6 +42,8 @@ class _BoardHeader extends React.Component {
     if (!title) return
     const { board, onSaveBoard } = this.props
     board.title = title
+    const savedActivity = boardService.createActivity('renamed', board.title)
+    board.activities.unshift(savedActivity)
     onSaveBoard(board)
     this.toggleEdit()
   }

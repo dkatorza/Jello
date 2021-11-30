@@ -16,7 +16,7 @@ async function query(filterBy = { ctg: '' }) {
 }
 
 async function save(board) {
-    const { title, createdBy, style, labels, members, lists, isFavorite } = board
+    const { title, createdBy, style, labels, members, lists,activities, isFavorite } = board
     let savedBoard
     if (board._id) {
         //UPDATE
@@ -29,6 +29,7 @@ async function save(board) {
                 labels,
                 members,
                 lists,
+                activities: activities.slice(0, 20),
                 isFavorite
             }
             const collection = await dbService.getCollection('board')

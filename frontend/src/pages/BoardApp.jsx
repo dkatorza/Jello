@@ -96,6 +96,9 @@ class _BoardApp extends React.Component {
       const listEndIdx = lists.indexOf(listEnd)
       lists[listStartIdx] = listStart
       lists[listEndIdx] = listEnd
+      const txt = `${listStart.title} to ${listEnd.title}`
+      const savedActivity = boardService.createActivity('moved', txt, ...card)
+      board.activities.unshift(savedActivity)
     }
 
     board.lists = lists

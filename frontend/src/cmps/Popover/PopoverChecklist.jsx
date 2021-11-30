@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { utilsService } from '../../services/utils.service';
@@ -8,7 +7,6 @@ import { onSaveBoard } from "../../store/actions/board.actions";
 import { Popover } from './Popover';
 
 class _PopoverChecklist extends React.Component {
-
     state = {
         title: ''
     }

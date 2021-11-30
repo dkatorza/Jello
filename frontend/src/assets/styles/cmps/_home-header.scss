@@ -40,6 +40,7 @@
             .login-btn {
                 letter-spacing: 1px;
                 color: #0065ff;
+                // font-weight: 500;
                 &:hover {
                     color: #0051cc;
                     text-decoration: underline;
@@ -52,7 +53,16 @@
                 &:hover {
                     background-color: #0051cc;
                 }
+                // font-weight: 500;
             }
         }
     }
 }
+
+// @media screen and (min-width: 560px) {
+//     .nav-btns {
+//         > * {
+//             padding: 0 10px;
+//         }
+//     }
+// }
