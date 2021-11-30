@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { onSaveBoard, loadBoards } from '../store/board.actions';
+import { onSaveBoard, loadBoards } from '../store/actions/board.actions';
 import { BoardList } from '../cmps/BoardList'
 import { ReactComponent as BoardIcon } from "../assets/img/board-icon.svg";
+import { Loader } from '../cmps/Loader'
 
 class _Workspace extends React.Component {
   componentDidMount() {

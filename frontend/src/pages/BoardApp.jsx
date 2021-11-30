@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom'
-import { onSaveBoard, loadBoard, unsetBoard } from '../store/board.actions.js';
+import { onSaveBoard, loadBoard, unsetBoard } from '../store/actions/board.actions.js';
 import { onLogin } from '../store/actions/app.actions'
+import { boardService } from '../services/board.service'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { closePopover } from '../store/actions/app.actions'
 import { eventBusService } from '../services/event-bus.service'
@@ -10,6 +11,7 @@ import { Loader } from '../cmps/Loader'
 import { CardEdit } from '../cmps/CardEdit'
 import { CardList } from '../cmps/CardList'
 import { CardListAdd } from '../cmps/CardListAdd'
+import { CardDetails } from './CardDetails'
 import { BoardHeader } from '../cmps/BoardHeader'
 import { socketService } from '../services/socket.service'
 

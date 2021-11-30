@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 
 
 import { boardReducer } from './reducers/board-reducer.js'
+import { appReducer } from './reducers/app.reducer.js'
 
 
 const rootReducer = combineReducers({

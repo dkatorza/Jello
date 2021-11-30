@@ -5,7 +5,7 @@ import { TextareaAutosize } from '@material-ui/core';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 
 
-export class GroupAdd extends React.Component {
+export class CardListAdd extends React.Component {
 
     state = {
         isOpen: false,

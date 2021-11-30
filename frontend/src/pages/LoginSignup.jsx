@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Link } from 'react-router-dom'
-import { onLogin, onSignup } from '../store/user.actions'
+import { onLogin, onSignup } from '../store/actions/app.actions'
 import { userService } from "../services/user.service.js";
-import { ReactComponent as LoginSignupLogo } from '../assets/img/login-signup/login-signup-logo.svg'
 import { ReactComponent as LogoRight } from '../assets/img/login-signup/right-logo.svg'
 import { ReactComponent as LogoLeft } from '../assets/img/login-signup/left-logo.svg'
 import { ReactComponent as LoginSignupLogo } from '../assets/img/logos/login-signup-logo.svg'

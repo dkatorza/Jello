@@ -57,3 +57,13 @@ export function closePopover() {
         dispatch(action)
     }
 }
+
+export function updateOnlineUsers(onlineUsers) {
+    return async dispatch => {
+        try {
+            dispatch({ type: 'SET_ONLINE_USERS', onlineUsers })
+        } catch (err) {
+            console.log('UserActions: err in login', err)
+        }
+    }
+}

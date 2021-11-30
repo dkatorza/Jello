@@ -11,7 +11,6 @@ export function onSaveBoard(board) {
             })
             socketService.emit('board newUpdate', savedBoard)
         } catch (err) {
-            showErrorMsg('Cannot save board')
             console.log('BoardAction: err in onSaveBoard', err)
         }
     }
@@ -43,7 +42,6 @@ export function loadBoard(boardId) {
                 board: board
             })
         } catch (err) {
-            showErrorMsg('Cannot load board')
             console.log('BoardAction: err in loadBoard', err)
         }
     }
