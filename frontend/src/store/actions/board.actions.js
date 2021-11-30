@@ -20,9 +20,14 @@ export function onSaveBoard(board) {
 export function loadBoards(filterBy) {
     return async dispatch => {
         try {
-            dispatch({ type: 'SET_LOADING' })
+            dispatch({
+                type: 'SET_LOADING'
+            })
             const boards = await boardService.query(filterBy)
-            dispatch({ type: 'SET_BOARDS', boards })
+            dispatch({
+                type: 'SET_BOARDS',
+                boards
+            })
         } catch (err) {
             console.log('BoardActions: err in loadBoards', err)
         }
@@ -32,7 +37,7 @@ export function loadBoards(filterBy) {
 export function loadBoard(boardId) {
     return async dispatch => {
         try {
-            const board = await boardService.getBoardById(boardId)
+            const board = await boardService.getById(boardId)
             dispatch({
                 type: 'SET_BOARD',
                 board: board
@@ -43,8 +48,6 @@ export function loadBoard(boardId) {
         }
     }
 }
-
-
 
 export function createBoard(board) {
     return async dispatch => {

@@ -30,11 +30,6 @@
     }
 }
 
-@mixin for-dashboard-narrow-layout {
-    @media (min-width: $dashboard-breakpoint) {
-        @content;
-    }
-}
 
 @mixin for-header-narrow-layout {
     @media (max-width: $header-breakbpoint) {

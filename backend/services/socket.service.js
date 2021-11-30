@@ -61,15 +61,6 @@ function connectSockets(http, session) {
             console.log('board update ', socket.boardId)
             socket.to(socket.boardId).emit('board updated', savedBoard)
         })
-         // socket.on('card comments', cardId => {
-        //     if (socket.cardId === cardId) return
-        //     if (socket.cardId) {
-        //         socket.leave(socket.cardId)
-        //     }
-        //     socket.join(cardId)
-        //     logger.debug('Session ID is', socket.handshake.sessionID)
-        //     socket.cardId = cardId
-        // })
     })
 }
 function emitToAll({ type, data, room = null }) {

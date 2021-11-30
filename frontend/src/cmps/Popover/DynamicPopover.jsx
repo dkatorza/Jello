@@ -15,6 +15,8 @@ import { PopoverActivity } from './PopoverActivity';
 import { PopoverBoardFilter } from './PopoverBoardFilter';
 import { PopoverCreateBoard } from './PopoverCreateBoard';
 import { PopoverListMenu } from './PopoverListMenu';
+import { PopoverNotifics } from './PopoverNotifics';
+import { PopoverBoardsSearch } from './PopoverBoardsSearch';
 
 
 function _DynamicPopover({ currPopover }) {
@@ -39,6 +41,8 @@ function _DynamicPopover({ currPopover }) {
         case 'BOARD_FILTER': return <PopoverBoardFilter {...props} />
         case 'CREATE_BOARD': return <PopoverCreateBoard {...props} />
         case 'LIST_MENU': return <PopoverListMenu {...props} />
+        case 'NOTIFICATIONS': return <PopoverNotifics {...props} />
+        case 'BOARDS_SEARCH': return <PopoverBoardsSearch {...props} />
         default: return '';
     }
 }

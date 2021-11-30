@@ -1,11 +1,11 @@
 import { httpService } from './http.service'
-// import { socketService, SOCKET_EVENT_USER_UPDATED } from './socket.service'
 
 export const userService = {
     login,
     logout,
     signup,
     getLoggedinUser,
+    getOnlineUsers,
     getUsers,
     getById,
     updateUser,
@@ -14,7 +14,6 @@ export const userService = {
 async function login(credentials) {
     try {
         const user = await httpService.post('auth/login', credentials)
-        // socketService.emit('set-user-socket', user._id);
         if (user) return _saveLocalUser(user)
     } catch (err) {
         throw err
@@ -25,7 +24,6 @@ async function login(credentials) {
 async function logout(user) {
     try {
         sessionStorage.clear()
-        // socketService.emit('unset-user-socket');
         return await httpService.post('auth/logout', user)
     } catch (err) {
         throw err
@@ -77,4 +75,17 @@ function _saveLocalUser(user) {
     return user
 }
 
-
+async function getOnlineUsers() {
+    try {
+        const users = await getUsers()
+        const onlineUsers = users.reduce((acc, user) => {
+            if (user.isOnline) {
+                acc.push(user._id)
+            }
+            return acc
+        }, [])
+        return onlineUsers
+    } catch (err) {
+        console.log(err)
+    }
+}

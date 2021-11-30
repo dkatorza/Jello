@@ -7,6 +7,7 @@ import { boardReducer } from './reducers/board-reducer.js'
 
 const rootReducer = combineReducers({
     boardModule: boardReducer,
+    appModule: appReducer,
 })
 
 

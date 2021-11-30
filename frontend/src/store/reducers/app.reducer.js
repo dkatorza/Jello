@@ -3,6 +3,7 @@ import { userService } from '../../services/user.service.js'
 const initialState = {
     workspace: [],
     loggedInUser: userService.getLoggedinUser(),
+    onlineUsers: [],
     loginErr: null,
     currPopover: {
         elPos: null,
@@ -16,6 +17,8 @@ export function appReducer(state = initialState, action) {
     switch (action.type) {
         case 'SET_USER':
             return { ...state, loggedInUser: action.user, loginErr: null }
+        case 'SET_ONLINE_USERS':
+            return { ...state, onlineUsers: [...action.onlineUsers] }
         case 'LOGIN_ERR':
             return { ...state, loginErr: action.err }
         case 'SET_POPOVER':

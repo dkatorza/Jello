@@ -114,7 +114,7 @@ class _BoardApp extends React.Component {
 
   render() {
     const { onSaveBoard, board, filterBy } = this.props
-    const { currCard, currList, elPos, isCardEditOpen, newBoard } = this.state
+    const { currCard, currList, elPos, isCardEditOpen } = this.state
     if (!board) return <Loader />
 
     return (
@@ -123,7 +123,6 @@ class _BoardApp extends React.Component {
           <section className="board-app flex column">
             <BoardHeader board={board} onSaveBoard={onSaveBoard} />
             <Route path="/board/:boardId/:listId/:cardId" component={CardDetails} />
-            <Route path="/board/:boardId/dashboard" component={Dashboard} />
             <Droppable droppableId="all-lists" direction="horizontal" type="list">
               {provided => (
                 <div {...provided.droppableProps} ref={provided.innerRef} className="card-list-container flex">
