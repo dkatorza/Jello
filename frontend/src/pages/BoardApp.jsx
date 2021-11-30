@@ -21,7 +21,6 @@ class _BoardApp extends React.Component {
   state = {
     isCardEditOpen: false,
     currCard: null,
-    currList: null,
     elPos: null,
   }
 
@@ -36,8 +35,8 @@ class _BoardApp extends React.Component {
       socketService.on('board updated', savedBoard => {
         this.props.loadBoard(savedBoard._id)
       })
-      this.removeEvent = eventBusService.on('card-edit', ({ elPos, card, currList }) => {
-        this.setState({ isCardEditOpen: true, currCard: card, elPos, currList })
+      this.removeEvent = eventBusService.on('card-edit', ({ elPos, card }) => {
+        this.setState({ isCardEditOpen: true, currCard: card, elPos })
         console.log(this.props);
       });
     } catch (err) {
@@ -116,7 +115,7 @@ class _BoardApp extends React.Component {
 
   render() {
     const { onSaveBoard, board, filterBy } = this.props
-    const { currCard, currList, elPos, isCardEditOpen } = this.state
+    const { currCard, elPos, isCardEditOpen } = this.state
     if (!board) return <Loader />
 
     return (
@@ -128,18 +127,14 @@ class _BoardApp extends React.Component {
             <Droppable droppableId="all-lists" direction="horizontal" type="list">
               {provided => (
                 <div {...provided.droppableProps} ref={provided.innerRef} className="card-list-container flex">
-                  {board.lists.map((currList, idx) => {
-                    const cards = currList.cards
-                    return (
-                      <CardList filterBy={filterBy}
-                        key={currList.id}
-                        currListIdx={idx}
-                        currList={currList}
-                        onSaveBoard={onSaveBoard}
-                        board={board}
-                        cards={cards} />)
-                  })
-                  }
+                  {board.lists.map((currList, idx) =>
+                    <CardList filterBy={filterBy}
+                      key={currList.id}
+                      currListIdx={idx}
+                      currList={currList}
+                      onSaveBoard={onSaveBoard}
+                      board={board}
+                    />)}
                   {provided.placeholder}
                   <CardListAdd board={board} onSaveBoard={onSaveBoard} />
                 </div>
@@ -147,7 +142,7 @@ class _BoardApp extends React.Component {
             </Droppable>
           </section>
         </DragDropContext>
-        {isCardEditOpen && <CardEdit board={board} currList={currList} card={currCard} elPos={elPos} onCloseCardEdit={this.onCloseCardEdit} />}
+        {isCardEditOpen && <CardEdit board={board} card={currCard} elPos={elPos} onCloseCardEdit={this.onCloseCardEdit} />}
       </>
     )
   }

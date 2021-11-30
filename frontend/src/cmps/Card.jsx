@@ -32,21 +32,21 @@ class _Card extends React.Component {
     ev.preventDefault();
     card.isDone = !card.isDone
     if (card.isDone) {
-        const txt = 'the due date complete'
-        const savedActivity = boardService.createActivity('marked', txt, card)
-        board.activities.unshift(savedActivity)
-        socketService.emit('app newActivity', savedActivity)
+      const txt = 'the due date complete'
+      const savedActivity = boardService.createActivity('marked', txt, card)
+      board.activities.unshift(savedActivity)
+      socketService.emit('app newActivity', savedActivity)
     }
     const savedBoard = boardService.updateCardInBoard(board, card)
     onSaveBoard(savedBoard);
-}
+  }
 
   onOpenCardEdit = (ev) => {
-    const { card, currList } = this.props
+    const { card } = this.props
     if (card.isArchived) return
     ev.preventDefault();
     const elPos = this.cardContainer.getBoundingClientRect();
-    eventBusService.emit('card-edit', { elPos, card, currList });
+    eventBusService.emit('card-edit', { elPos, card });
   }
 
   onOpenPopover = (ev, type, member) => {

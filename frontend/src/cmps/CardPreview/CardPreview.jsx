@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Draggable } from 'react-beautiful-dnd'
 import { Card } from '../Card'
 
-export class CardPreview extends React.Component  {
+export class CardPreview extends React.Component {
 
     draggableStyle = (style, snapshot) => {
         if (!snapshot.isDropAnimating) {
@@ -24,7 +24,7 @@ export class CardPreview extends React.Component  {
                         <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}
                             style={this.draggableStyle(provided.draggableProps.style, snapshot)} >
                             <Link to={`/board/${board._id}/${currList?.id}/${card.id}`} className="clean-link">
-                                <Card card={card} currList={currList} board={board} />
+                                <Card card={card} board={board} />
                             </Link>
                         </div>
                     )}
