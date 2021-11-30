@@ -9,6 +9,7 @@ import { CardPreviewComments } from './CardPreview/CardPreviewComments'
 import { Subject as SubjectIcon } from '@material-ui/icons'
 import { onSaveBoard } from '../store/actions/board.actions'
 import { openPopover } from '../store/actions/app.actions'
+import { socketService } from '../services/socket.service'
 import EditIcon from '@material-ui/icons/CreateOutlined'
 import { TextareaAutosize } from '@material-ui/core';
 import { eventBusService } from '../services/event-bus.service'

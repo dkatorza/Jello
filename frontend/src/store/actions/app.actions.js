@@ -1,12 +1,13 @@
 import { userService } from '../../services/user.service.js'
-
+import { socketService } from '../../services/socket.service.js'
 
 export function onLogin(credentials = { username: 'dkatorza', password: '1234' }) {
-    console.log('credentials', credentials);
+    console.log('credentials',credentials);
     return async dispatch => {
         try {
             const user = await userService.login(credentials)
             dispatch({ type: 'SET_USER', user })
+            socketService.emit('user-watch', user._id)
         } catch (err) {
             console.log('UserActions: err in login', err)
         }
@@ -27,6 +28,7 @@ export function onSignup(userInfo) {
 export function onLogout(user) {
     return async dispatch => {
         try {
+            socketService.emit('user endSession', user._id)
             await userService.logout(user)
             dispatch({ type: 'SET_USER', user: null })
         } catch (err) {

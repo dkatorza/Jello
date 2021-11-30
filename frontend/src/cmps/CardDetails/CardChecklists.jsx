@@ -25,7 +25,7 @@ class _CardChecklists extends React.Component {
     onCreateActivity = (type, txt) => {
         let { card, board, onSaveBoard } = this.props
         const savedActivity = boardService.createActivity(type, txt, card)
-        socketService.emit('app newActivity',savedActivity)
+        socketService.emit('app newActivity', savedActivity)
         board.activities.unshift(savedActivity)
         onSaveBoard(board)
     }

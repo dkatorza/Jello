@@ -4,6 +4,8 @@ import { Popover } from './Popover';
 import { boardService } from '../../services/board.service'
 import { PopoverMemberPreview } from './PopoverMemberPreview'
 import { onSaveBoard } from '../../store/actions/board.actions';
+import { socketService } from '../../services/socket.service'
+
 
 class _PopoverMembers extends React.Component {
 

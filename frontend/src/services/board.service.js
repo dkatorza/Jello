@@ -9,6 +9,7 @@ export const boardService = {
     remove,
     updateCardInBoard,
     setPopoverPos,
+    createActivity,
     removeCard,
     getFilteredList,
 }
@@ -100,4 +101,36 @@ function removeCard(board, card) {
             list.cards = list.cards.filter(boardCard => boardCard.id !== card.id)
     })
     return { ...board }
+}
+
+export function createActivity(actionType, txt = '', card = null) {
+
+    const loggedInUser = userService.getLoggedinUser()
+
+    const { _id, fullname, imgUrl } = loggedInUser
+
+    const byMember = {
+        _id,
+        fullname,
+        imgUrl
+    }
+
+    let savedCard
+    if (card) {
+        savedCard = {
+            id: card.id,
+            title: card.title,
+            members: card.members
+        }
+    }
+
+    const savedActivity = {
+        id: utilsService.makeId(),
+        actionType,
+        txt,
+        createdAt: Date.now(),
+        byMember,
+        card: savedCard || null,
+    }
+    return savedActivity
 }

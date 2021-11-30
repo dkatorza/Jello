@@ -1,4 +1,5 @@
 import { boardService } from "../../services/board.service.js";
+import { socketService } from '../../services/socket.service'
 
 export function onSaveBoard(board) {
     return async dispatch => {
@@ -8,6 +9,7 @@ export function onSaveBoard(board) {
                 type: 'SAVE_BOARD',
                 board: savedBoard
             })
+            socketService.emit('board newUpdate', savedBoard)
         } catch (err) {
             showErrorMsg('Cannot save board')
             console.log('BoardAction: err in onSaveBoard', err)

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { openPopover, onLogout, closePopover } from '../store/actions/app.actions'
+import { socketService } from "../services/socket.service";
 import { ReactComponent as HomeIcon } from '../assets/img/icons/home.svg'
 import { ReactComponent as BoardIcon } from '../assets/img/icons/board.svg'
 import { ReactComponent as AddIcon } from '../assets/img/icons/add.svg'
@@ -15,11 +16,24 @@ class _AppHeader extends React.Component {
     state = {
         filterTxt: '',
         currOpenModal: '',
+        isNewNotific: false,
+    }
+
+    componentDidMount() {
+        socketService.on('app addActivity', activity => {
+            this.setState({ isNewNotific: true })
+        })
     }
 
     toggleCurModal = (modalName = '') => {
         if (this.state.currOpenModal === modalName) this.setState({ currOpenModal: '' })
         else this.setState({ currOpenModal: modalName })
+    }
+
+    onOpenNotifics = (ev) => {
+        this.setState({ isNewNotific: false }, () => {
+            this.onOpenPopover(ev, 'NOTIFICATIONS')
+        })
     }
 
     onOpenPopover = (ev, popoverName) => {
@@ -45,8 +59,10 @@ class _AppHeader extends React.Component {
         onLogout(loggedInUser)
     }
 
+
     render() {
-        const { isBoardStyle, loggedInUser } = this.props
+        const { isNewNotific } = this.state
+        const { isBoardStyle, openPopover, loggedInUser } = this.props
         return <div>
             <div className={`main-header flex justify-space-between ${isBoardStyle ? 'in-board' : 'out-board'} `}>
                 <div className="btn-header-container flex">
@@ -94,12 +110,13 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-    onLogout,
     openPopover,
+    onLogout,
     closePopover
-
 }
 
+
 export const AppHeader = connect(mapStateToProps, mapDispatchToProps)(withRouter(_AppHeader))
+
 
 

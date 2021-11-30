@@ -11,6 +11,7 @@ import { CardEdit } from '../cmps/CardEdit'
 import { CardList } from '../cmps/CardList'
 import { CardListAdd } from '../cmps/CardListAdd'
 import { BoardHeader } from '../cmps/BoardHeader'
+import { socketService } from '../services/socket.service'
 
 class _BoardApp extends React.Component {
 
@@ -23,12 +24,16 @@ class _BoardApp extends React.Component {
   }
 
 
-
   async componentDidMount() {
     try {
       if (!this.props.loggedInUser) this.props.onLogin()
       const { boardId } = this.props.match.params
       await this.props.loadBoard(boardId)
+      const { board } = this.props
+      socketService.emit('join board', board._id)
+      socketService.on('board updated', savedBoard => {
+        this.props.loadBoard(savedBoard._id)
+      })
       this.removeEvent = eventBusService.on('card-edit', ({ elPos, card, currList }) => {
         this.setState({ isCardEditOpen: true, currCard: card, elPos, currList })
         console.log(this.props);
@@ -43,10 +48,12 @@ class _BoardApp extends React.Component {
     if (prevProps.match.params.boardId !== boardId) {
       closePopover()
       await loadBoard(boardId)
+      socketService.emit('join board', boardId)
     }
   }
 
   componentWillUnmount() {
+    socketService.off('board updated')
     if (this.removeEvent) {
       this.removeEvent()
     }
@@ -68,7 +75,7 @@ class _BoardApp extends React.Component {
     const droppableIdxStart = source.index
     const droppableIdxEnd = destination.index
 
-    // CHANGE LOCATION BETWEEN CARD LISTS
+    // dragging lists around
     if (type === 'list') {
       const list = lists.splice(droppableIdxStart, 1)
       lists.splice(droppableIdxEnd, 0, ...list)
@@ -77,7 +84,7 @@ class _BoardApp extends React.Component {
       return
     }
 
-    // CHECK AND MOVE CARDS INSIDE THE SAME CARD LIST
+    // in the same list
     if (droppableIdStart === droppableIdEnd) {
       const list = lists.find(list => list.id === droppableIdStart)
       const card = list.cards.splice(droppableIdxStart, 1)
@@ -86,7 +93,7 @@ class _BoardApp extends React.Component {
       lists[listIdx] = list
     }
 
-    // CHECK AND MOVE CARDS BETWEEN CARDS LISTS
+    // other list 
     if (droppableIdStart !== droppableIdEnd) {
       const listStart = lists.find(list => list.id === droppableIdStart)
       const card = listStart.cards.splice(droppableIdxStart, 1)
@@ -100,14 +107,14 @@ class _BoardApp extends React.Component {
       const savedActivity = boardService.createActivity('moved', txt, ...card)
       board.activities.unshift(savedActivity)
     }
-
     board.lists = lists
     onSaveBoard(board)
-  };
+  }
+
 
   render() {
     const { onSaveBoard, board, filterBy } = this.props
-    const { currCard, currList, elPos, isCardEditOpen } = this.state
+    const { currCard, currList, elPos, isCardEditOpen, newBoard } = this.state
     if (!board) return <Loader />
 
     return (
@@ -150,7 +157,8 @@ function mapStateToProps(state) {
     board: state.boardModule.board,
     isLoading: state.boardModule.isLoading,
     loggedInUser: state.appModule.loggedInUser,
-  };
+    filterBy: state.boardModule.filterBy
+  }
 }
 
 const mapDispatchToProps = {
@@ -159,6 +167,6 @@ const mapDispatchToProps = {
   unsetBoard,
   onLogin,
   closePopover
-};
+}
 
-export const BoardApp = connect(mapStateToProps, mapDispatchToProps)(_BoardApp);
+export const BoardApp = connect(mapStateToProps, mapDispatchToProps)(_BoardApp)
