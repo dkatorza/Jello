@@ -23,6 +23,7 @@ class _PopoverCreateBoard extends React.Component {
 
     onCreateBoard = async () => {
         const { title, color } = this.state
+        if (!title) return
         const { loggedInUser, onSaveBoard, closePopover } = this.props
         const boardToSave = {
             title,

@@ -26,7 +26,7 @@ export class FileUpload extends React.Component {
   render() {
     return (
       <div className="upload-preview" >
-        <label htmlFor="file-upload">Computer</label>
+        <label htmlFor="file-upload">Upload a cover image</label>
         <input type="file" onChange={ this.uploadFile } accept="img/*" id="file-upload" />
       </div>
     )

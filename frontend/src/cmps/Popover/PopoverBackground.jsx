@@ -27,7 +27,7 @@ function _PopoverBackground({ onSaveBoard, board }) {
             </div>
             <div>
                 <h4>Images</h4>
-                <ImagePalette handleChange={handleChange} />
+                <ImagePalette handleChange={handleChange} noOfImg={10} styleDisplay={"bg-img"} />
             </div>
         </div>
     </Popover>

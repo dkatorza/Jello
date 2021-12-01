@@ -91,7 +91,7 @@ function setPopoverPos(pos, elRect, diff = 38) {
     const viewportWidth = window.innerWidth
     const viewportHeight = window.innerHeight
     if (left + width > viewportWidth) left = viewportWidth - width - 10
-    if (top + height > viewportHeight) top = viewportHeight - height - 10
+    if (top + height > viewportHeight) top = viewportHeight - height - 110
     return { left, top, width }
 }
 

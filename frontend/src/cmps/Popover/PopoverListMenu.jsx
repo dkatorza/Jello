@@ -14,7 +14,7 @@ export class PopoverListMenu extends React.Component{
     render(){
         return <Popover title="List actions" togglePopover={this.props.toggleMenu}>
             <ul className="list-menu-content clean-list">
-                <li onClick={this.onDeleteList}>Delete</li>
+                <li onClick={this.onDeleteList}>Archive this list</li>
             </ul>
         </Popover>
     }

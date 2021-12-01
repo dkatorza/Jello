@@ -6,7 +6,8 @@ export class PopoverLabelEdit extends React.Component {
 
     state = {
         title: '',
-        color: ''
+        color: '',
+        hoverColor: ''
     }
 
     componentDidMount() {
@@ -15,9 +16,14 @@ export class PopoverLabelEdit extends React.Component {
     }
 
     handleChange = ({ target }) => {
-        const { name, value } = target
-        this.setState({ [name]: value })
+        const hover = target.dataset.hover
+        const { name,value } = target
+        this.setState({ [name]: value})
+        if (name === 'color') {
+            this.setState({hoverColor:hover})
+        }
     }
+
     onSaveLabel = () => {
         if (!this.state.title || !this.state.color) return
         this.props.saveLabel({ ...this.state, id: this.props.labelToEdit?.id || '' })
@@ -40,7 +46,7 @@ export class PopoverLabelEdit extends React.Component {
                 <input type="text" name="title" value={title} onChange={this.handleChange}
                     className="pop-over-input" />
                 <h4>Color</h4>
-                <ColorPalette handleChange={this.handleChange} selectedColor={color} />
+                <ColorPalette handleChange={this.handleChange} selectedColor={color}/>
             </div>
             <div className="flex justify-space-between">
                 <button className="primary-btn" onClick={this.onSaveLabel} >

@@ -74,6 +74,7 @@
     margin-bottom: 8px;
     border-bottom: 1px solid rgba(9, 30, 66, 0.13);
     label {
+        background-color: $clr9;
         display: block;
         padding: 6px 12px;
         margin-bottom: 8px;
@@ -84,8 +85,9 @@
         font-size: 1rem;
         display: flex;
         align-items: center;
+        justify-content: center;
         &:hover {
-            background-color: #091e420a;
+            background-color: $clr10;
         }
     }
     input {

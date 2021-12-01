@@ -33,7 +33,6 @@ class _CardEdit extends React.Component {
     componentDidMount() {
         this.setState({ cardTitle: this.props.card.title })
         this.onSetPopoverPos()
-        console.log(this.props);
     }
 
     onSaveCard = ({ target }) => {
@@ -47,6 +46,7 @@ class _CardEdit extends React.Component {
     }
 
     onOpenPopover = (ev, popoverName) => {
+        console.log('popoverName',popoverName);
         const elPos = ev.target.getBoundingClientRect()
         const props = {
             card: this.props.card

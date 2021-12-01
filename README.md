@@ -5,8 +5,8 @@ Jello is a Trello clone built for educational purposes using MERN stack > MongoD
 For those who wonder what Trello is, you can find more about on www.trello.com.
 Basically, it's a team tasks management platform where you and your team can collaborate, manage projects and increase productivity.
 
-Jello is a continuation of a previous project I collaborated on named Thello, which is also a Trello clone focused on the frontend side.
-You can find more about Thello here: https://github.com/moshedabush/thello 
+Jello is a continuation of a previous project I collaborated on named thello, which is also a Trello clone focused on the frontend side.
+You can find more about thello here: https://github.com/moshedabush/thello 
 
 As we parted ways, I have decided to continue working on it while implementing my vision on how the inside of it should look, from functionality point of view to the structure of the app.
 While It will not mimic every aspect of the original Trello, it will provide the feel and look of it. 

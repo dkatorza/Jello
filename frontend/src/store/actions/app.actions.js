@@ -2,7 +2,6 @@ import { userService } from '../../services/user.service.js'
 import { socketService } from '../../services/socket.service.js'
 
 export function onLogin(credentials = { username: 'dkatorza', password: '1234' }) {
-    console.log('credentials',credentials);
     return async dispatch => {
         try {
             const user = await userService.login(credentials)
@@ -38,6 +37,7 @@ export function onLogout(user) {
 }
 
 export function openPopover(popoverName, elPos, props) {
+    console.log(popoverName);
     return dispatch => {
         const action = {
             type: 'SET_POPOVER',

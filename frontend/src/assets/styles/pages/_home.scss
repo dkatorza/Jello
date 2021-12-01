@@ -1,6 +1,5 @@
 .home {
     background: linear-gradient(0deg, #fff, #eae6ff 100%);
-    
     .home-container {
         padding: 0 15px;
         margin: auto;
@@ -28,18 +27,16 @@
                     font-size: rem(20px);
                     margin-bottom: 24px;
                 }
-                button {
+                a {
                     border-radius: 6px;
                     font-size: rem(20px);
                     line-height: rem(44px);
                     letter-spacing: 1px;
                     color: #fff;
                     background-color: #0065ff;
-                    border: unset;
                     &:hover {
                         background-color: #0051cc;
                     }
-                    cursor: pointer;
                 }
             }
             .hero-img {
@@ -48,7 +45,7 @@
         }
         .product {
             line-height: 1.5;
-
+            
             .product-info {
                 margin-bottom: rem(24px);
             }
@@ -65,9 +62,9 @@
                 font-size: rem(20px);
                 margin-bottom: 24px;
             }
-            button {
+            a {
                 font-weight: 600;
-                font-size: rem(20px);
+                font-size: rem(22px);
                 border-radius: 6px;
                 padding: 5px 15px;
                 line-height: rem(44px);
@@ -88,9 +85,6 @@
             }
         }
     }
-}
-.hero-img{
-    height: 400px;
 }
 
 @media screen and (min-width: 560px) {

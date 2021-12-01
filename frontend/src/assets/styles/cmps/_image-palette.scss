@@ -40,9 +40,20 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 8px;
-        label[name="label-img"] {
+        label[name="bg-img"] {
             width: 150px;
             height: 100px;
+            border-radius: 3px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            &:hover {
+                filter: brightness(90%);
+            }
+        }
+        label[name="cover-img"] {
+            width: 88px;
+            height: 48px;
             border-radius: 3px;
             background-size: cover;
             background-position: center;
@@ -58,7 +69,5 @@
         width: 0;
         height: 0;
     }
-    // svg {
-    //     z-index: 2;
-    // }
+
 }

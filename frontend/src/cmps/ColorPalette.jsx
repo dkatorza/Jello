@@ -3,26 +3,68 @@ import CheckIcon from '@material-ui/icons/Check';
 export function ColorPalette({ handleChange, selectedColor, isGradient, isColor, count }) {
 
     const colorCodes = [
-        '#60bd4f',
-        '#f2d600',
-        '#ff9e1a',
-        '#eb5a46',
-        '#c277e0',
-        '#0279bf',
-        '#52e898',
-        '#ff78cb',
-        '#334563',
-        '#b3bac5',
-
+        {
+            'color': '#61bd4f',
+            'hover': '#519839'
+        },
+        {
+            'color': '#f2d600',
+            'hover': '#d9b51c'
+        },
+        {
+            'color': '#ff9f1a',
+            'hover': '#cd8313'
+        },
+        {
+            'color': '#eb5a46',
+            'hover': '#b04632'
+        },
+        {
+            'color': '#c377e0',
+            'hover': '#89609e'
+        },
+        {
+            'color': '#0079bf',
+            'hover': '#055a8c'
+        },
+        {
+            'color': '#00c2e0',
+            'hover': '#0098b7'
+        },
+        {
+            'color': '#51e898',
+            'hover': '#4bbf6b'
+        },
+        {
+            'color': '#ff78cb',
+            'hover': '#c9558f'
+        },
+        {
+            'color': '#344563',
+            'hover': '#091e42'
+        }
     ]
-    
+
+
     const gradientStyles = [
-        'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
-        'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
-        'linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%)',
-        ' linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)',
-        'linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)',
-        'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
+        {
+            'color': 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'
+        },
+        {
+            'color': 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)'
+        },
+        {
+            'color': 'linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%)'
+        },
+        {
+            'color': 'linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)'
+        },
+        {
+            'color': 'linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%)'
+        },
+        {
+            'color': 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)'
+        }
     ]
 
     function getStyles() {
@@ -32,10 +74,12 @@ export function ColorPalette({ handleChange, selectedColor, isGradient, isColor,
 
     return <div className="color-palette">
         {getStyles().map(colorCode => {
-            return <label key={colorCode} className="flex align-center justify-center" style={{ background: colorCode }} name="label-color" htmlFor={`color-${colorCode}`}>
-                <input type="radio" name="color" id={`color-${colorCode}`} value={colorCode} onClick={handleChange} />
-                {selectedColor === colorCode && <CheckIcon key={colorCode} style={{ width: '16px', height: '16px', color: 'white' }} />}
+            return <label key={colorCode.color} className="flex align-center justify-center" style={{ background: colorCode.color }} name="label-color" htmlFor={`color-${colorCode.color}`}>
+                <input type="radio" data-hover={colorCode.hover} name="color" id={`color-${colorCode.color}`} value={colorCode.color} onClick={handleChange} />
+                {selectedColor === colorCode.color && <CheckIcon key={colorCode.color} style={{ width: '16px', height: '16px', color: 'white' }} />}
             </label>
         })}
+
+
     </div>
 }

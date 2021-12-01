@@ -14,6 +14,7 @@ class _PopoverLabels extends React.Component {
         presentedLabels: '',
         labelToEdit: null,
         isEditMode: false,
+       
     }
 
     componentDidMount() {

@@ -1,18 +1,20 @@
 import CheckIcon from '@material-ui/icons/Check';
 import EditIcon from '@material-ui/icons/Edit';
+import { motion } from "framer-motion"
 
 export function PopoverLabelPreview({ label, toggleLabel, isSelected, toggleEditMode, isFilterPreview }) {
     return <li className="flex">
         {!isFilterPreview ?
             <>
-                <div style={{ backgroundColor: label.color, color: 'white' }} name="label"
+                <motion.div style={{ backgroundColor: label.color, color: 'white' }} name="label"
+                    whileHover={{ boxShadow: `-8px 0 ${label.hoverColor}` }}
                     onClick={() => toggleLabel(label, 'labels')}
                     className="label-pop-over-preview flex justify-space-between">
                     <span>{label.title}</span>
                     {isSelected && <span className="icon-check" >
                         <CheckIcon style={{ width: '16px', height: '16px', color: 'white' }} />
                     </span>}
-                </div>
+                </motion.div>
                 <div className="flex align-center justify-center">
                     <EditIcon style={{ width: '16px', height: '16px', color: '#42526e' }}
                         onClick={() => toggleEditMode(label)} />
@@ -26,5 +28,5 @@ export function PopoverLabelPreview({ label, toggleLabel, isSelected, toggleEdit
                 {isSelected && <i className="icon-check" ><CheckIcon /> </i>}
             </div>
         }
-    </li>
+    </li >
 }

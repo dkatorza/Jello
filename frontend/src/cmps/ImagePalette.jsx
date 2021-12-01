@@ -5,33 +5,24 @@ export class ImagePalette extends React.Component {
 
     state = {
         imgs: [],
-        keyword: ''
+        keyword: '',
     }
 
     componentDidMount() {
-        this.loadImgs()
-    }
-
-    loadImgs = async () => {
-        try {
-            const imgs = await unSplashService.getTenImgs()
-            this.setState({ imgs })
-        } catch (err) {
-            console.log(err)
-        }
+        this.onSearch('16:9',this.props.noOfImg)
     }
 
     handleChange = ({ target }) => {
         const { value } = target
         this.setState({ keyword: value }, () => {
-            if (value.length >= 3) this.onSearch()
-            else if (value.length === 0) this.loadImgs()
+            if (value.length >= 3) this.onSearch(this.state.keyword, this.props.noOfImg)
+            else if (value.length === 0) this.onSearch(this.state.keyword)
         })
     }
 
-    onSearch = async () => {
+    onSearch = async (keyword, noOfImages) => {
         try {
-            const imgs = await unSplashService.searchImgs(this.state.keyword)
+            const imgs = await unSplashService.searchImgs(keyword, noOfImages)
             this.setState({ imgs })
         } catch (err) {
             console.log(err)
@@ -40,10 +31,9 @@ export class ImagePalette extends React.Component {
 
     render() {
         const { imgs, keyword } = this.state
-        const { handleChange } = this.props
+        const { handleChange, styleDisplay } = this.props
 
         if (!imgs) return <div></div>
-
         return <div className="image-palette">
             <div className="image-palette-search">
                 <span className="search-icon"></span>
@@ -55,7 +45,7 @@ export class ImagePalette extends React.Component {
                 {imgs.map(img => {
                     return <label
                         key={img.id}
-                        name="label-img"
+                        name={`${styleDisplay}`}
                         className="flex align-center justify-center"
                         style={{ backgroundImage: `url(${img.small})` }}
                         htmlFor={`img-${img.id}`}>

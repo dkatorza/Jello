@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { utilsService } from '../../services/utils.service';
 import { ColorPalette } from '../ColorPalette';
+import { ImagePalette } from '../ImagePalette';
 import { FileUpload } from '../FileUpload';
 import { Popover } from './Popover';
 import { boardService } from '../../services/board.service'
 import { onSaveBoard } from '../../store/actions/board.actions'
-import { connect } from 'react-redux';
 
 class _PopoverCover extends React.Component {
 
@@ -29,15 +30,20 @@ class _PopoverCover extends React.Component {
         onSaveBoard(updatedBoard)
     }
 
-    handleChange = ({ target }) => {
+    handleChange = async ({ target }) => {
         let { coverMode } = this.state
         if (!coverMode) coverMode = 'header';
-        this.setState({ bgColor: target.value, bgImgUrl: '', coverMode: coverMode }, this.onSaveCover)
+        const { name, value } = await target
+        if (name === 'imgUrl') {
+            this.setState({ bgImgUrl: value, bgColor: '', coverMode: 'full' })
+        } else {
+            this.setState({ bgColor: target.value, bgImgUrl: '', coverMode: coverMode })
+        }
+        this.onSaveCover()
     }
 
     onRemoveCover = () => {
         this.setState({ bgColor: '', coverMode: '', bgImgUrl: '' }, this.onSaveCover)
-        // this.props.removeCoverBg()
     }
 
     onSetMode = (mode) => {
@@ -51,7 +57,7 @@ class _PopoverCover extends React.Component {
     }
 
     onFileUpload = (fileUrl) => {
-        if (!utilsService.isValidImg(fileUrl)) return // error message
+        if (!utilsService.isValidImg(fileUrl)) return
         this.setState({ bgImgUrl: fileUrl, bgColor: '', coverMode: 'full' })
         this.onSaveCover()
     }
@@ -60,7 +66,7 @@ class _PopoverCover extends React.Component {
         const { bgColor, coverMode, bgImgUrl } = this.state
         return <Popover title="Cover">
             <div className="cover-pop-over-content">
-                <h4>SIZE</h4>
+                <h4>Size</h4>
                 <div className="cover-options flex justify-space-between align-center">
                     <div className={`header-cover-preview ${coverMode === 'header' ? 'selected' : ''}`} onClick={() => this.onSetMode('header')} >
                         <div className="header-section" style={{ backgroundColor: bgColor ? bgColor : '#5e6c844d' }}></div>
@@ -70,10 +76,13 @@ class _PopoverCover extends React.Component {
                 {(bgColor || bgImgUrl) && <div className="flex">
                     <button className="secondary-btn full" onClick={this.onRemoveCover}>Remove Cover</button>
                 </div>}
-                <h4>COLOR</h4>
+                <h4>Colors</h4>
                 <ColorPalette selectedColor={bgColor} handleChange={this.handleChange} />
-                <h4>ATTACHMENTS</h4>
+                <h4>Attachments</h4>
                 <FileUpload onFileUpload={this.onFileUpload} />
+                <h4>Images</h4>
+                <ImagePalette handleChange={this.handleChange} noOfImg={6} styleDisplay={"cover-img"} />
+
             </div>
         </Popover>
     }

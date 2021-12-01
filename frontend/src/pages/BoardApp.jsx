@@ -37,7 +37,6 @@ class _BoardApp extends React.Component {
       })
       this.removeEvent = eventBusService.on('card-edit', ({ elPos, card }) => {
         this.setState({ isCardEditOpen: true, currCard: card, elPos })
-        console.log(this.props);
       });
     } catch (err) {
       console.log(err)

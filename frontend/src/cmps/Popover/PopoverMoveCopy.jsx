@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popover } from "./Popover";
-import { onSaveBoard } from '../../store/actions/board.actions'
+import { onSaveBoard, loadBoards } from '../../store/actions/board.actions'
 import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -12,20 +12,26 @@ import { utilsService } from "../../services/utils.service";
 class _PopoverMoveCopy extends React.Component {
 
     state = {
-        board: null,
+        board: '',
         listId: '',
         cardIdx: 0,
-        title: ''
+        title: '',
+        boards: ''
     }
 
     componentDidMount() {
-        const { board, card } = this.props
+        this.props.loadBoards()
+        const { boards,board, card } = this.props
+        console.log('b',boards);
         const listIdx = board.lists.findIndex(list => list.cards.some(boardCard => boardCard.id === card.id))
-        this.setState({ board, listId: board.lists[listIdx].id, title: card.title })
+        this.setState({ boards, board, listId: board.lists[listIdx].id, title: card.title })
+        console.log('d',this.state.boards);
     }
 
-    onBoardSelect = () => {
-        this.setState({ board: this.state.board })
+    onBoardSelect = ({target}) => {
+        const {value} = target
+        this.setState({ board: value })
+        console.log(this.state);
     }
 
     handleChange = ({ target }) => {
@@ -61,7 +67,7 @@ class _PopoverMoveCopy extends React.Component {
     }
 
     render() {
-        const { board, listId, cardIdx, title } = this.state
+        const { board, boards, listId, cardIdx, title } = this.state
         const { popoverType, card } = this.props
         if (!board) return ''
         const listIdx = this.chosenListIdx
@@ -79,11 +85,12 @@ class _PopoverMoveCopy extends React.Component {
                         <Select
                             labelId="board-select"
                             id="board-select"
-                            value={board._id}
+                            value = ""
                             onChange={this.onBoardSelect}
                         >
-                            {/* Map all boards from workspace */}
-                            <MenuItem value={board._id}>{board.title}</MenuItem>
+                            {boards.map((board,idx) =>
+                                <MenuItem key={idx} value={board._id}>{board.title}</MenuItem>
+                            )}
                         </Select>
                     </FormControl>
 
@@ -96,7 +103,7 @@ class _PopoverMoveCopy extends React.Component {
                             name="listId"
                             onChange={this.handleChange}
                         >
-                            {board.lists.map(list => <MenuItem value={list.id}>{list.title}</MenuItem>)}
+                            {board.lists.map(list => <MenuItem key={list.id} value={list.id}>{list.title}</MenuItem>)}
                         </Select>
                     </FormControl>
                     <FormControl variant="filled" className="position-select clean-select">
@@ -109,7 +116,7 @@ class _PopoverMoveCopy extends React.Component {
                             onChange={this.handleChange}
                         >
                             {chosenCards.length ?
-                                chosenCards.map((card, idx) => <MenuItem value={idx}>{idx ? idx + 1 : 1}</MenuItem>)
+                                chosenCards.map((card, idx) => <MenuItem key={idx} value={idx}>{idx ? idx + 1 : 1}</MenuItem>)
                                 :
                                 <MenuItem value={0}>1</MenuItem>}
                         </Select>
@@ -126,11 +133,13 @@ class _PopoverMoveCopy extends React.Component {
 }
 const mapDispatchToProps = {
     onSaveBoard,
-    closePopover
+    closePopover,
+    loadBoards
 }
 function mapStateToProps(state) {
     return {
-        board: state.boardModule.board
+        board: state.boardModule.board,
+        boards: state.boardModule.boards
     }
 }
 

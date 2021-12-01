@@ -12,6 +12,7 @@ class _Workspace extends React.Component {
 
   get favoriteBoards() {
     const { boards } = this.props
+    console.log('1231boards',boards);
     return boards.filter(board => board.isFavorite)
   }
 
