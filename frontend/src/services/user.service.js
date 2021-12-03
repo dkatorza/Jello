@@ -4,6 +4,7 @@ export const userService = {
     login,
     logout,
     signup,
+    googleLogin,
     getLoggedinUser,
     getOnlineUsers,
     getUsers,
@@ -34,6 +35,15 @@ async function signup(userInfo) {
     try {
         const user = await httpService.post('auth/signup', userInfo)
         return _saveLocalUser(user)
+    } catch (err) {
+        throw err
+    }
+}
+
+async function googleLogin(tokenId) {
+    try {
+        const user = await httpService.post('auth/googlelogin', { tokenId })
+        if (user) return _saveLocalUser(user)
     } catch (err) {
         throw err
     }

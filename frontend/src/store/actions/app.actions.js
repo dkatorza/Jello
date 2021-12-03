@@ -36,6 +36,21 @@ export function onLogout(user) {
     }
 }
 
+export function onGoogleLogin(tokenId) {
+    return async dispatch => {
+        try {
+            const user = await userService.googleLogin(tokenId)
+            dispatch({
+                type: 'SET_USER',
+                user
+            })
+            socketService.emit('user-watch', user._id)
+        } catch (err) {
+            console.log('UserActions: err in login', err)
+        }
+    }
+}
+
 export function openPopover(popoverName, elPos, props) {
     console.log(popoverName);
     return dispatch => {

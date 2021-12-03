@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { Link } from 'react-router-dom'
-import { onLogin, onSignup } from '../store/actions/app.actions'
+import { onLogin, onSignup,onGoogleLogin } from '../store/actions/app.actions'
+import { GoogleLogin } from 'react-google-login'
 import { userService } from "../services/user.service.js";
 import { ReactComponent as LogoRight } from '../assets/img/login-signup/right-logo.svg'
 import { ReactComponent as LogoLeft } from '../assets/img/login-signup/left-logo.svg'
@@ -62,6 +63,16 @@ export class _LoginSignup extends React.Component {
         pageMode === 'login' ? onLogin(values) : onSignup(values)
     }
 
+    onSuccessGoogle = (res) => {
+        const { tokenId } = res
+        const { onGoogleLogin } = this.props
+        onGoogleLogin(tokenId)
+    }
+
+    onFailureGoogle = (res) => {
+        console.log('Login with google failed', res)
+    }
+
 
     render() {
         const { pageMode, credentials, userInfo } = this.state
@@ -86,6 +97,14 @@ export class _LoginSignup extends React.Component {
                     </Form>
                 </Formik>
                 <p>OR</p>
+                <GoogleLogin
+                    className="google-login-btn flex align-center justify-center"
+                    clientId='451116030640-9itanbk4cij4cjp9uo0sttk4jpu4m81c.apps.googleusercontent.com'
+                    buttonText='Continue with Google'
+                    onSuccess={this.onSuccessGoogle}
+                    onFailure={this.onFailureGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
                 <hr />
                 <Link to="/signup">Sign up for an account</Link>
             </div>}
@@ -127,7 +146,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
     onLogin,
-    onSignup
+    onSignup,
+    onGoogleLogin
 }
 
 export const LoginSignup = connect(mapStateToProps, mapDispatchToProps)(_LoginSignup)

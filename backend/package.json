@@ -28,6 +28,7 @@
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "nodemon": "1.18.10"
   }
 }

@@ -1,7 +1,4 @@
 .login-signup-container {
-    main{
-        margin-block-start: unset;
-    }
     background-color: $clr2;
     height: 100vh;
 
@@ -96,6 +93,8 @@
                 align-items: center;
                 margin: unset !important;
                 background-color: unset !important;
+                svg {
+                }
             }
         }
 
@@ -117,13 +116,12 @@
         }
     }
 
+    .left-logo,
     .right-logo {
         display: none;
         position: absolute;
         width: 400px;
         max-width: 30%;
-        bottom: 0;
-        right: 0
     }
 
     .left-logo {
@@ -131,6 +129,10 @@
         left: 0;
     }
 
+    .right-logo {
+        bottom: 0;
+        right: 0;
+    }
 
     @include for-wide-layout {
         background-color: #f9fafc;
