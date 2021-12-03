@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Popover } from "./Popover";
 import { onSaveBoard, loadBoards } from '../../store/actions/board.actions'
-import { connect } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,36 +13,53 @@ import { utilsService } from "../../services/utils.service";
 class _PopoverMoveCopy extends React.Component {
 
     state = {
+        boards: '',
         board: '',
+        fromBoard:'',
+        fromBoardId: '',
+        list: '',
+        boardId: '',
         listId: '',
         cardIdx: 0,
-        title: '',
-        boards: ''
+        title: ''
     }
 
-    componentDidMount() {
-        this.props.loadBoards()
-        const { boards,board, card } = this.props
-        console.log('b',boards);
-        const listIdx = board.lists.findIndex(list => list.cards.some(boardCard => boardCard.id === card.id))
-        this.setState({ boards, board, listId: board.lists[listIdx].id, title: card.title })
-        console.log('d',this.state.boards);
+    async componentDidMount() {
+        await this.props.loadBoards()
+        const { boards, board, card } = this.props
+        console.log('props',this.props);
+        this.setState({ boards: boards,fromBoard:board, fromBoardId: board._id, board: board, title: card.title })
+
     }
 
-    onBoardSelect = ({target}) => {
-        const {value} = target
-        this.setState({ board: value })
-        console.log(this.state);
+    onBoardSelect = async ({ target }) => {
+        const { value } = await target
+        const { boards } = this.props
+        this.setState({ boardId: value, board: boards.find(board => board._id === value) })
     }
 
-    handleChange = ({ target }) => {
-        const { name, value } = target
+    handleChange = async ({ target }) => {
+        const { board } = this.state
+        const { name, value } = await target
         this.setState({ [name]: value })
+
+        if (name === 'listId') {
+            this.setState({ list: board.lists.find(list => list.id === value) })
+        }
     }
 
-    onMoveCard = (cardToMove) => {
-        const { closePopover, onSaveBoard } = this.props
-        const { board, listId, cardIdx } = this.state
+    onMoveCard = async (cardToMove) => {
+        const { closePopover, onSaveBoard,history} =  this.props
+        const { board, listId, cardIdx,fromBoard} = this.state
+        if(fromBoard._id !== board._id) {
+            fromBoard.lists.forEach(list => {
+                list.cards.forEach((boardCard, idx) => {
+                    if (boardCard.id === cardToMove.id) list.cards.splice(idx, 1)
+                })
+            })
+            const updatedOriginBoard = await JSON.parse(JSON.stringify(fromBoard))
+            onSaveBoard(updatedOriginBoard)
+        }      
         board.lists.forEach(list => {
             list.cards.forEach((boardCard, idx) => {
                 if (boardCard.id === cardToMove.id) list.cards.splice(idx, 1)
@@ -51,27 +69,22 @@ class _PopoverMoveCopy extends React.Component {
         const updatedBoard = JSON.parse(JSON.stringify(board))
         onSaveBoard(updatedBoard)
         closePopover()
+        history.push(`/board/${board._id}`)
     }
 
-    onCopyCard = () => {
+    onCopyCard = async () => {
         const { card } = this.props
         const duplicateCard = JSON.parse(JSON.stringify(card))
-        duplicateCard.id = utilsService.makeId()
+        duplicateCard.id = await utilsService.makeId()
         duplicateCard.title = this.state.title
         this.onMoveCard(duplicateCard)
     }
 
-    get chosenListIdx() {
-        const { board, listId } = this.state
-        return board.lists.findIndex(list => list.id === listId)
-    }
-
     render() {
-        const { board, boards, listId, cardIdx, title } = this.state
+        const { boards, board, list, listId,title } = this.state
         const { popoverType, card } = this.props
-        if (!board) return ''
-        const listIdx = this.chosenListIdx
-        const chosenCards = board.lists[listIdx].cards
+        if (!boards) return ''
+
         return <Popover title={popoverType === 'move' ? 'Move card' : 'Copy card'}>
             {popoverType === 'copy' && <>
                 <label htmlFor="title-copy">Title</label>
@@ -85,10 +98,10 @@ class _PopoverMoveCopy extends React.Component {
                         <Select
                             labelId="board-select"
                             id="board-select"
-                            value = ""
+                            value={board._id}
                             onChange={this.onBoardSelect}
                         >
-                            {boards.map((board,idx) =>
+                            {boards.map((board, idx) =>
                                 <MenuItem key={idx} value={board._id}>{board.title}</MenuItem>
                             )}
                         </Select>
@@ -111,14 +124,11 @@ class _PopoverMoveCopy extends React.Component {
                         <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            value={cardIdx}
+                            value=''
                             name="cardIdx"
                             onChange={this.handleChange}
                         >
-                            {chosenCards.length ?
-                                chosenCards.map((card, idx) => <MenuItem key={idx} value={idx}>{idx ? idx + 1 : 1}</MenuItem>)
-                                :
-                                <MenuItem value={0}>1</MenuItem>}
+                            {list && list.cards.map((card, idx) => <MenuItem key={idx} value={idx}>{idx ? idx + 1 : 1}</MenuItem>)}
                         </Select>
                     </FormControl>
                 </div>
@@ -130,6 +140,7 @@ class _PopoverMoveCopy extends React.Component {
             </div>
         </Popover>
     }
+
 }
 const mapDispatchToProps = {
     onSaveBoard,
@@ -144,4 +155,4 @@ function mapStateToProps(state) {
 }
 
 
-export const PopoverMoveCopy = connect(mapStateToProps, mapDispatchToProps)(_PopoverMoveCopy)
+export const PopoverMoveCopy = connect(mapStateToProps, mapDispatchToProps)(withRouter(_PopoverMoveCopy))

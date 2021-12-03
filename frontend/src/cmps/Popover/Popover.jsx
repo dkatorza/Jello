@@ -26,12 +26,12 @@ export class _Popover extends React.Component {
     }
 
 
-    onSetPopoverPos = () => {
-        const { elPos, displayMode } = this.props
+    onSetPopoverPos = async () => {
+        const { elPos, displayMode } = await this.props
         console.log(window.innerHeight);
         if (!this.selectedDiv) return
         const elRect = this.selectedDiv.getBoundingClientRect()
-        let { left, top} = boardService.setPopoverPos(elPos, elRect)
+        let { left, top} =  boardService.setPopoverPos(elPos, elRect)
         if (window.innerHeight < 937) {
             top = window.innerHeight - elRect.height - 210
             left = window.innerWidth - elRect.width - 50

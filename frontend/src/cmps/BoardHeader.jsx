@@ -108,7 +108,7 @@ class _BoardHeader extends React.Component {
 
           <div className="board-header-members flex align-center">
             <AvatarGroup>
-              {board.members.map(member => <ProfileAvatar key={member._id} member={member}
+              {board.members && board.members.map(member => <ProfileAvatar key={member._id} member={member}
                 onOpenPopover={this.onOpenPopover} size={28} showStatus={true} />)}
             </AvatarGroup>
 

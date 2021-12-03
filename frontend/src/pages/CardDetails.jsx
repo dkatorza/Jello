@@ -27,9 +27,9 @@ class _CardDetails extends React.Component {
         card: null,
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // SETTING LIST AND CARD FROM PARAMS
-        const { board: { lists }, closePopover } = this.props
+        const { board: { lists }, closePopover } = await this.props
         const { cardId, listId } = this.props.match.params
         closePopover()
         const list = lists.find(list => list.id === listId)

@@ -45,13 +45,14 @@ class _CardEdit extends React.Component {
         onCloseCardEdit();
     }
 
-    onOpenPopover = (ev, popoverName) => {
-        console.log('popoverName',popoverName);
+    onOpenPopover =  (ev, popoverName) => {
+        const {onCloseCardEdit} = this.props
         const elPos = ev.target.getBoundingClientRect()
-        const props = {
+        const props =  {
             card: this.props.card
         }
         this.props.openPopover(popoverName, elPos, props)
+        if (popoverName === 'MOVE') onCloseCardEdit()
     }
 
     //Checking for CardEdit menu position,and securing menu position inside viewport
@@ -62,8 +63,8 @@ class _CardEdit extends React.Component {
         this.setState({ top, left, width })
     }
 
-    get list() {
-        const { card, board } = this.props
+     get list () {
+        const { card, board } =  this.props
         const list = board.lists.find(list => list.cards.some(currCard => card.id === currCard.id))
         return list
     }
@@ -71,7 +72,6 @@ class _CardEdit extends React.Component {
     render() {
         const { card, board, onCloseCardEdit } = this.props
         const { top, left, width, cardTitle } = this.state
-
         return <>
             <ScreenOverlay goBack={onCloseCardEdit} styleMode={'darken'} closeBtn={true}>
                 <div className="edit-pop-over" style={{ top: `${top}px`, left: `${left}px`, width: `${width}px` }} ref={(div) => { this.selectedDiv = div }} >

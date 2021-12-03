@@ -84,7 +84,7 @@ function getFilteredList(listToFilter, filter) {
 }
 
 
-function setPopoverPos(pos, elRect, diff = 38) {
+ function setPopoverPos(pos, elRect, diff = 38) {
     let { left, top } = pos
     top += diff
     const { height, width } = elRect
