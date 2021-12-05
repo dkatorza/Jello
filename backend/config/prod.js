@@ -1,3 +1,6 @@
+require('dotenv').config()
+
 module.exports = {
-  'dbURL': ''
+  'dbURL': process.env.MONGODB_KEY_CONNECT
 }
+

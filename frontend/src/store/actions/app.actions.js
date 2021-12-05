@@ -1,10 +1,10 @@
 import { userService } from '../../services/user.service.js'
 import { socketService } from '../../services/socket.service.js'
 
-export function onLogin(credentials = { username: 'dkatorza', password: '1234' }) {
+export function onLogin(credentials ) {
     return async dispatch => {
         try {
-            const user = await userService.login(credentials)
+            const user = await userService.login(credentials = { username: 'dkatorza', password: '1234' })
             dispatch({ type: 'SET_USER', user })
             socketService.emit('user-watch', user._id)
         } catch (err) {
