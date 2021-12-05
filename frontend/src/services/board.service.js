@@ -92,6 +92,7 @@ function getFilteredList(listToFilter, filter) {
     const viewportHeight = window.innerHeight
     if (left + width > viewportWidth) left = viewportWidth - width - 10
     if (top + height > viewportHeight) top = viewportHeight - height - 110
+    if (top + height < viewportHeight && top + height > 800) top = viewportHeight - height - 110
     return { left, top, width }
 }
 

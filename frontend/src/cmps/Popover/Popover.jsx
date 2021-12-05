@@ -33,8 +33,8 @@ export class _Popover extends React.Component {
         const elRect = this.selectedDiv.getBoundingClientRect()
         let { left, top} =  boardService.setPopoverPos(elPos, elRect)
         if (window.innerHeight < 937) {
-            top = window.innerHeight - elRect.height - 210
-            left = window.innerWidth - elRect.width - 50
+            top = window.innerHeight - elRect.height - 225
+            left = window.innerWidth - elRect.width - 60
         }
         if (displayMode === 'menu-popovers') {
             top = 40;
