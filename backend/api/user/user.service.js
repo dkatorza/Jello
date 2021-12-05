@@ -84,7 +84,6 @@ async function update(user) {
 }
 
 async function add(user) {
-    console.log('user',user);
     const { username, password, fullname } = user
     try {
         // peek only updatable fields!

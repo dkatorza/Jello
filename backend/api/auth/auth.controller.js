@@ -6,7 +6,6 @@ const client = new OAuth2Client(process.env.GOOGLE_AUTH_CRED)
 require('dotenv').config()
 
 async function login(req, res) {
-    console.log('req.body',req.body);
     const { username, password } = req.body
     try {
         const user = await authService.login(username, password)
