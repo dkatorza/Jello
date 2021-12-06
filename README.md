@@ -51,7 +51,8 @@ While It will not mimic every aspect of the original Trello, it will provide the
 <h2>Showcase</h2>
 
 <h3>Live presentation</h3>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gALZE7oS9KM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://user-images.githubusercontent.com/76620273/144859303-b9a86e53-2c3c-47d3-b95d-d6235cd1e882.mp4
+
 
 
 <h3>Board Main View</h3>
