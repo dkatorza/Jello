@@ -50,16 +50,16 @@ While It will not mimic every aspect of the original Trello, it will provide the
 
 <h2>Showcase</h2>
 
-<img src="https://i.im.ge/2021/12/06/oWIoXC.png" alt="oWIoXC.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWIQZ4.png" alt="oWIQZ4.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWIMwD.png" alt="oWIMwD.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWDBpM.png" alt="oWDBpM.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWDe1Y.png" alt="oWDe1Y.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWIlbp.png" alt="oWIlbp.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWIXiq.png" alt="oWIXiq.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWIrGP.png" alt="oWIrGP.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWIF71.png" alt="oWIF71.png" </a>
-<img src="https://i.im.ge/2021/12/06/oWI1pm.png" alt="oWI1pm.png" </a>
+<img src="https://i.im.ge/2021/12/06/oWIoXC.png" alt="oWIoXC.png"/>
+<img src="https://i.im.ge/2021/12/06/oWIQZ4.png" alt="oWIQZ4.png"/>
+<img src="https://i.im.ge/2021/12/06/oWIMwD.png" alt="oWIMwD.png"/>
+<img src="https://i.im.ge/2021/12/06/oWDBpM.png" alt="oWDBpM.png"/>
+<img src="https://i.im.ge/2021/12/06/oWDe1Y.png" alt="oWDe1Y.png"/>
+<img src="https://i.im.ge/2021/12/06/oWIlbp.png" alt="oWIlbp.png"/>
+<img src="https://i.im.ge/2021/12/06/oWIXiq.png" alt="oWIXiq.png"/>
+<img src="https://i.im.ge/2021/12/06/oWIrGP.png" alt="oWIrGP.png"/>
+<img src="https://i.im.ge/2021/12/06/oWIF71.png" alt="oWIF71.png"/>
+<img src="https://i.im.ge/2021/12/06/oWI1pm.png" alt="oWI1pm.png"/>
 
 
 
