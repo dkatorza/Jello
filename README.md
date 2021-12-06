@@ -50,6 +50,9 @@ While It will not mimic every aspect of the original Trello, it will provide the
 
 <h2>Showcase</h2>
 
+<h3>Live presentation</h3>
+<div style="width:100%;height:0px;position:relative;padding-bottom:56.250%;"><iframe src="https://streamable.com/e/90pnww" frameborder="0" width="100%" height="100%" allowfullscreen style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></div>
+
 <h3>Board Main View</h3>
 <img src="https://i.im.ge/2021/12/06/oWDe1Y.png" alt="oWDe1Y.png"/>
 
