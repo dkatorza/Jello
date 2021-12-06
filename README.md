@@ -50,14 +50,31 @@ While It will not mimic every aspect of the original Trello, it will provide the
 
 <h2>Showcase</h2>
 
-<img src="https://i.im.ge/2021/12/06/oWIoXC.png" alt="oWIoXC.png"/>
-<img src="https://i.im.ge/2021/12/06/oWIQZ4.png" alt="oWIQZ4.png"/>
-<img src="https://i.im.ge/2021/12/06/oWIMwD.png" alt="oWIMwD.png"/>
-<img src="https://i.im.ge/2021/12/06/oWDBpM.png" alt="oWDBpM.png"/>
+<h3>Board Main View</h3>
 <img src="https://i.im.ge/2021/12/06/oWDe1Y.png" alt="oWDe1Y.png"/>
-<img src="https://i.im.ge/2021/12/06/oWIlbp.png" alt="oWIlbp.png"/>
-<img src="https://i.im.ge/2021/12/06/oWIXiq.png" alt="oWIXiq.png"/>
+
+<h3>Label add/edit</h3>
+<img src="https://i.im.ge/2021/12/06/oWIoXC.png" alt="oWIoXC.png"/>
+
+<h3>Card details</h3>
+<img src="https://i.im.ge/2021/12/06/oWIQZ4.png" alt="oWIQZ4.png"/>
+
+<h3>Side menu</h3>
 <img src="https://i.im.ge/2021/12/06/oWI1pm.png" alt="oWI1pm.png"/>
+
+<h3>Side menu - change board background</h3>
+<img src="https://i.im.ge/2021/12/06/oWIMwD.png" alt="oWIMwD.png"/>
+
+<h3>Side menu - filter</h3>
+<img src="https://i.im.ge/2021/12/06/oWDBpM.png" alt="oWDBpM.png"/>
+
+<h3>Quick menu - Edit card</h3>
+<img src="https://i.im.ge/2021/12/06/oWIlbp.png" alt="oWIlbp.png"/>
+
+<h3>Responsive</h3>
+<img src="https://i.im.ge/2021/12/06/oWIXiq.png" alt="oWIXiq.png"/>
+
+
 
 
 
