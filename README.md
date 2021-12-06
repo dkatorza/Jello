@@ -51,8 +51,8 @@ While It will not mimic every aspect of the original Trello, it will provide the
 <h2>Showcase</h2>
 
 <h3>Live presentation</h3>
-https://user-images.githubusercontent.com/76620273/144859303-b9a86e53-2c3c-47d3-b95d-d6235cd1e882.mp4
 
+https://user-images.githubusercontent.com/76620273/144861516-5dfd577c-a36a-4ffd-8e1f-a852670928e2.mp4
 
 
 <h3>Board Main View</h3>
