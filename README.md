@@ -57,8 +57,6 @@ While It will not mimic every aspect of the original Trello, it will provide the
 <img src="https://i.im.ge/2021/12/06/oWDe1Y.png" alt="oWDe1Y.png"/>
 <img src="https://i.im.ge/2021/12/06/oWIlbp.png" alt="oWIlbp.png"/>
 <img src="https://i.im.ge/2021/12/06/oWIXiq.png" alt="oWIXiq.png"/>
-<img src="https://i.im.ge/2021/12/06/oWIrGP.png" alt="oWIrGP.png"/>
-<img src="https://i.im.ge/2021/12/06/oWIF71.png" alt="oWIF71.png"/>
 <img src="https://i.im.ge/2021/12/06/oWI1pm.png" alt="oWI1pm.png"/>
 
 
