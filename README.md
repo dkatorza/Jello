@@ -1,4 +1,4 @@
-# Jello  - Trello clone with React.js# 
+# Jello  - Trello clone with React.js
 
 ***Production link - <a href="https://jellotrello.herokuapp.com" target="_blank">Jello</a>***
 
